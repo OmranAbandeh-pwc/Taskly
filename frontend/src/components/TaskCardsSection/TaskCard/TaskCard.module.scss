@@ -1,0 +1,47 @@
+@import "../../../variables.scss";
+
+.card {
+  padding: 20px;
+  height: 260px;
+  width: auto;
+  box-shadow: 0 0 20px 1px $gray-color-5;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.date {
+  color: $gray-color;
+  font-size: 14px;
+  font-weight: 500;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.dottedTitle {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.dot {
+  height: 8px;
+  width: 8px;
+  border-radius: 100%;
+}
+
+.title {
+  font-size: 18px;
+  font-weight: 700;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.description {
+  color: $gray-color;
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 500;
+  margin-top: 0;
+  margin-bottom: 0;
+}

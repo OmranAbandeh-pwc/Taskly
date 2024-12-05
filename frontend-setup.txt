@@ -1,0 +1,14 @@
+
+1- To create React App with Typescript :
+
+    - "npx create-react-app my-app --template typescript"
+
+2- Install React Router :
+
+    - "npm i react-router-dom"
+
+3- Install sass ysing this command : 
+
+    - "npm install sass"
+
+4- we need to create a global.d.ts file to be able to import styles from scss without typescript error

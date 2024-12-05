@@ -1,0 +1,45 @@
+@import "../../variables.scss";
+
+.toolsBar {
+  width: 100%;
+  height: 50px;
+  box-sizing: border-box;
+  padding-inline: 50px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.filterButtonsContainer {
+  display: flex;
+  gap: 20px;
+}
+
+.addButton {
+  color: $theme-color;
+  font-weight: 600;
+  height: auto;
+  gap: 5px;
+}
+
+.buttonIconClass {
+  font-size: 22px;
+  display: flex;
+  align-items: center;
+}
+
+@media (max-width: 768px) {
+  .buttonIconClass {
+    font-size: 50px;
+    color: $theme-color;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+  }
+}
+
+.buttonTextClass {
+  margin: 0;
+}

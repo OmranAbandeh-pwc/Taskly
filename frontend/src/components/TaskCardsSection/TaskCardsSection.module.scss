@@ -1,0 +1,28 @@
+.cardsSection {
+  padding-inline: 50px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+@media (max-width: 1024px) {
+  .cardsSection {
+    grid-template-columns: repeat(3, 1fr);
+    /* 3 cards per row when width < 1024px */
+  }
+}
+
+@media (max-width: 768px) {
+  .cardsSection {
+    padding: 20px;
+    grid-template-columns: repeat(2, 1fr);
+    /* 2 cards per row when width < 768px */
+  }
+}
+
+@media (max-width: 480px) {
+  .cardsSection {
+    grid-template-columns: 1fr;
+    /* 1 card per row when width < 480px */
+  }
+}
