@@ -7,8 +7,11 @@ import { IoAddCircleOutline } from "react-icons/io5";
 import { IoAddCircleSharp } from "react-icons/io5";
 
 import { useResize } from "../../hooks/useResize";
+interface ToolsBarProps {
+  className?: string;
+}
 
-const ToolsBar: React.FC<any> = () => {
+const ToolsBar: React.FC<ToolsBarProps> = ({ className }) => {
   const [activeButton, setActiveButton] = useState(filterButtons[0].title); // Initial active button
   const { isMobile } = useResize();
 
@@ -17,7 +20,7 @@ const ToolsBar: React.FC<any> = () => {
   };
 
   return (
-    <div className={styles.toolsBar}>
+    <div className={`${styles.toolsBar} ${className}`}>
       <div className={styles.filterButtonsContainer}>
         {filterButtons.map((button, index) => (
           <FilterButton
@@ -30,7 +33,7 @@ const ToolsBar: React.FC<any> = () => {
       </div>
 
       {isMobile ? (
-        <IoAddCircleSharp className={styles.buttonIconClass}/>
+        <IoAddCircleSharp className={styles.buttonIconClass} />
       ) : (
         <Button
           title={"Add new note"}

@@ -1,0 +1,39 @@
+@import "../../variables.scss";
+
+.header {
+  box-sizing: border-box;
+  width: 100vw;
+  height: $header-hight;
+  padding-inline: 20px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: $theme-color;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.sidebarIcon {
+  font-size: 30px;
+  color: $white-color;
+  cursor: pointer;
+}
+
+.userInfoContainer {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.userIcon {
+  height: 40px !important;
+  width: 40px !important;
+  border-radius: 100% !important;
+  overflow: hidden;
+}
+
+.userNameLabel {
+  white-space: nowrap;
+  color: $white-color;
+}
