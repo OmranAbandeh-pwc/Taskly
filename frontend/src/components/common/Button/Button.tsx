@@ -25,7 +25,7 @@ const Button: React.FC<ButtonProps> = ({
         <span className={`${styles.buttonIcon} ${iconClass}`}>{icon}</span>
       )}
 
-      <Text text={title} styles={textStyles} />
+      <Text text={title} styles={`${styles.textStyles} ${textStyles}`} />
     </div>
   );
 };

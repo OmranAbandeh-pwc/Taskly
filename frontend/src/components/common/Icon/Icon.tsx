@@ -1,12 +1,17 @@
-import React from 'react'
+import React from "react";
 import styles from "./Icon.module.scss";
 
-const Icon: React.FC<any> = ({icon, className}) => {
-  return (
-    <div className={`${styles.iconContainer} ${className}`}>
-      <img className={styles.icon} src={icon}/>
-    </div>
-  )
+interface IconProps {
+  icon: string;
+  className: string;
 }
 
-export default Icon
+const Icon: React.FC<IconProps> = ({ icon, className }) => {
+  return (
+    <div className={`${styles.iconContainer} ${className}`}>
+      <img className={styles.icon} src={icon} />
+    </div>
+  );
+};
+
+export default Icon;

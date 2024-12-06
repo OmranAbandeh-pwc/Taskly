@@ -5,7 +5,6 @@ import { filterButtons } from "../../json/static";
 import Button from "../common/Button/Button";
 import { IoAddCircleOutline } from "react-icons/io5";
 import { IoAddCircleSharp } from "react-icons/io5";
-
 import { useResize } from "../../hooks/useResize";
 interface ToolsBarProps {
   className?: string;
