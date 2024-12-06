@@ -11,13 +11,6 @@ const SearchBar = () => {
     <div className={styles.searchbarContainer}>
       <IoSearchSharp className={styles.searchIcon} onClick={()=>{console.log("search")}}/>
       <input type="text" className={styles.searchInput} />
-      <Icon
-        className={styles.userIcon}
-        icon={
-          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT36VHh-mjL_Rc8IL60D77dMDPL_fNhosHuag&s"
-        }
-      />
-      <Text styles={styles.userNameLabel} text={"Hello, Omran"} />
     </div>
   );
 };

@@ -1,8 +1,12 @@
 .cardsSection {
   padding-inline: 50px;
+  padding-top: 10px;
+  padding-bottom: 20px;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 16px;
+  flex-grow: 1;
+  overflow-y: auto;
 }
 
 @media (max-width: 1024px) {

@@ -1,14 +1,18 @@
-import { Route, Routes } from 'react-router-dom';
-import './App.css';
-import Home from './Pages/Home/Home';
-import TaskDestailsPage from './Pages/TaskDestailsPage/TaskDestailsPage';
+import { Route, Routes } from "react-router-dom";
+import "./App.css";
+import Home from "./Pages/Home/Home";
+import TaskDestailsPage from "./Pages/TaskDestailsPage/TaskDestailsPage";
+import Header from "./components/Header/Header";
 
 function App() {
   return (
-    <Routes>
-      <Route path="/" element={<Home />}/>
-      <Route path="/task/details" element={<TaskDestailsPage />}/>
-    </Routes>
+    <>
+      <Header />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/task/details" element={<TaskDestailsPage />} />
+      </Routes>
+    </>
   );
 }
 
