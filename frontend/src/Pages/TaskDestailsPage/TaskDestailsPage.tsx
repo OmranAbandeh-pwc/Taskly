@@ -1,9 +1,13 @@
-import React from 'react'
+import { useParams } from "react-router-dom"
+import styles from "./TaskDestailsPage.module.scss";
 
 const TaskDestailsPage = () => {
+
+  const {id} = useParams()
+
   return (
-    <div>
-      TaskDestailsPage
+    <div className={styles.mainContainer}>
+      TaskDestailsPage{id}
     </div>
   )
 }
