@@ -8,6 +8,7 @@ const TaskCardsSection: React.FC<TaskCardsSectionProps> = ({ cards }) => {
       {cards.map((card, index) => (
         <TaskCard
           key={index}
+          id={card.id}
           date={card.date}
           title={card.title}
           description={card.description}
