@@ -1,12 +1,11 @@
-
-
 export interface TaskCardProps {
-    date: string;
-    title: string;
-    description: string;
-    dotColor: string;
-  }
+  id: number;
+  date: string;
+  title: string;
+  description: string;
+  dotColor: string;
+}
 
-  export interface TaskCardsSectionProps {
-    cards: TaskCardProps[]
-  }
+export interface TaskCardsSectionProps {
+  cards: TaskCardProps[];
+}
