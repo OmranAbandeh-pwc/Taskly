@@ -1,5 +1,6 @@
 import React from "react";
 import styles from "./FilterButton.module.scss";
+import { useResize } from "../../../../hooks/useResize";
 
 interface FilterButton {
   title: string;
@@ -12,9 +13,11 @@ const FilterButton: React.FC<FilterButton> = ({
   isActive,
   handleClick,
 }) => {
+
+  const { isMobile } = useResize()
   return (
     <button
-      className={`${styles.button} ${isActive ? styles.active : ""}`}
+      className={`${isMobile ? styles.mobileButton : styles.button} ${isActive ? styles.active : ""}`}
       onClick={handleClick}
     >
       {title}

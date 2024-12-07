@@ -1,0 +1,15 @@
+
+@import "../../../variables.scss";
+
+.checkboxContainer {
+    display: flex;
+    align-items: center;
+    gap: 8px; /* Space between the checkbox and the text */
+  }
+
+.checkbox{
+    cursor: pointer;
+    height: 20px;
+    width: 20px;
+    accent-color: $theme-color;
+}
