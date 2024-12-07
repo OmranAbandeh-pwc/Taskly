@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styles from "./ToolsBar.module.scss";
 import FilterButton from "./components/FilterButton/FilterButton";
-import { filterButtons } from "../../json/static";
+import { filterButtons } from "../../json/filtersStatic";
 import Button from "../common/Button/Button";
 import { IoAddCircleOutline } from "react-icons/io5";
 import { IoAddCircleSharp } from "react-icons/io5";

@@ -14,14 +14,16 @@ import {
   loginBTN,
   signupText,
   signupLinkTitle,
-} from "../../../json/staticLabels";
+} from "../../../json/static/staticLoginPage";
 import { Link } from "react-router-dom";
 import CheckBox from "../../../components/common/CheckBox/CheckBox";
 import { useState } from "react";
+import { useResize } from "../../../hooks/useResize";
 
 const LoginPage = () => {
   const [userEmail, setUserEmail] = useState<string>("");
   const [userPassword, setUserPassword] = useState<string>("");
+  const { widthSize } = useResize();
 
   const handleLogin = () => {
     if (userEmail && userPassword) {
@@ -66,13 +68,15 @@ const LoginPage = () => {
           </div>
         </div>
       </div>
-      <div className={styles.loginImage}>
-        <Picture
-          image={
-            "https://pbs.twimg.com/profile_images/2156229262/Logo_square_400x400.png"
-          }
-        />
-      </div>
+      {widthSize >= 1024 && (
+        <div className={styles.loginImage}>
+          <Picture
+            image={
+              "https://pbs.twimg.com/profile_images/2156229262/Logo_square_400x400.png"
+            }
+          />
+        </div>
+      )}
     </div>
   );
 };
