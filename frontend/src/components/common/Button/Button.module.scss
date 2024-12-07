@@ -1,12 +1,18 @@
 
+@import "../../../variables.scss";
+
 .buttonContainer{
     cursor: pointer;
     display: flex;
     align-items: center;
     gap: 10px;
+    background-color: $theme-color;
+    color: $white-color;
+    border-radius: 8px;
+    width: 100%;
 }
 .buttonIcon{
-    fill: #646ec8;
+    fill: $theme-color;
 }
 .textStyles{
     text-align: center;

@@ -1,0 +1,31 @@
+.signupPageContainer {
+  width: 100vw;
+  min-height: 100vh;
+  padding-top: 50px;
+  padding-bottom: 50px;
+  overflow: auto;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  .signupPageInnerContainer {
+    .titleSection {
+      width: 80vw;
+    }
+
+    .signupContainer {
+      width: 80vw;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 30px;
+    }
+
+    @media (max-width: 1024px) {
+      .signupContainer {
+        grid-template-columns: repeat(1, 1fr);
+      }
+    }
+  }
+}
