@@ -12,13 +12,14 @@ import {
   loginPasswordInputPlaceholder,
   checkBoxLabel,
   loginBTN,
-  signupText,
-  signupLinkTitle,
+  textWithImage,
 } from "../../../json/static/staticLoginPage";
 import { Link } from "react-router-dom";
 import CheckBox from "../../../components/common/CheckBox/CheckBox";
 import { useState } from "react";
 import { useResize } from "../../../hooks/useResize";
+import TitleSection from "../../../components/common/TitleSection/TitleSection";
+import TextWithButton from "../components/TextWithButton/TextWithButton";
 
 const LoginPage = () => {
   const [userEmail, setUserEmail] = useState<string>("");
@@ -36,8 +37,10 @@ const LoginPage = () => {
     <div className={styles.loginPageContainer}>
       <div className={styles.loginContainer}>
         <div className={styles.loginContent}>
-          <Text styles={styles.title} text={loginHeaderTitle} />
-          <Text styles={styles.subTitle} text={loginHeaderSubTitle} />
+          <TitleSection
+            title={loginHeaderTitle}
+            subTitle={loginHeaderSubTitle}
+          />
           <div className={styles.loginTextInputs}>
             <TextInput
               label={loginEmailInputLabel}
@@ -59,12 +62,10 @@ const LoginPage = () => {
               title={loginBTN}
               onClick={handleLogin}
             />
-            <div className={styles.createAccountText}>
-              <Text text={signupText} />
-              <Link className={styles.link} to={"/SignupPage"}>
-                {signupLinkTitle}
-              </Link>
-            </div>
+            <TextWithButton
+              text={textWithImage.text}
+              link={textWithImage.link}
+            />
           </div>
         </div>
       </div>

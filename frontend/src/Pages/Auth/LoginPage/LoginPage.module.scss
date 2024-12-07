@@ -5,70 +5,59 @@
   width: 100vw;
   display: flex;
   justify-content: center;
-}
 
-.loginPageContainer .loginContainer {
-  height: 100vh;
-  width: 50vw;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-@media (max-width: 1024px) {
-  .loginPageContainer .loginContainer {
+  .loginContainer {
     height: 100vh;
-    width: 100vw;
-  }
-}
-
-.loginPageContainer .loginContent {
-  width: 80%;
-  min-height: 200px;
-}
-
-.loginPageContainer .loginContent {
-  .title {
-    font-size: 32px;
-    font-weight: 500;
-    margin: 0;
-    margin-bottom: 10px;
-  }
-  .subTitle {
-    font-size: 16px;
-    font-weight: 400;
-    margin: 0;
-    margin-bottom: 45px;
-    color: #4b5563;
-  }
-
-  .loginTextInputs {
+    width: 50vw;
     display: flex;
-    flex-direction: column;
-    gap: 30px;
+    align-items: center;
+    justify-content: center;
   }
 
-  .loginBTN {
-    text-align: center;
-    color: $white-color;
-    background-color: $theme-color;
-    border-radius: 8px;
+  .loginContent {
+    width: 80%;
+    min-height: 200px;
   }
-}
 
-.loginPageContainer .loginImage {
-  height: 100vh;
-  width: 50vw;
-  background-color: rgb(197, 197, 250);
-}
+  .loginContent {
+    .title {
+      font-size: 32px;
+      font-weight: 500;
+      margin: 0;
+      margin-bottom: 10px;
+    }
+    .subTitle {
+      font-size: 16px;
+      font-weight: 400;
+      margin: 0;
+      margin-bottom: 45px;
+      color: #4b5563;
+    }
 
-.createAccountText {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 4px;
-}
-.createAccountText .link {
-  text-decoration: none;
-  color: $theme-color;
+    .loginTextInputs {
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+    }
+
+    .loginBTN {
+      text-align: center;
+      color: $white-color;
+      background-color: $theme-color;
+      border-radius: 8px;
+    }
+  }
+
+  .loginImage {
+    height: 100vh;
+    width: 50vw;
+    background-color: rgb(197, 197, 250);
+  }
+
+  @media (max-width: 1024px) {
+    .loginContainer {
+      height: 100vh;
+      width: 100vw;
+    }
+  }
 }

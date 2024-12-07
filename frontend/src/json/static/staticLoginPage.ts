@@ -6,9 +6,11 @@ const loginEmailInputPlaceholder = "omran.abandeh@taskly.com";
 const loginPasswordInputLabel = "Password";
 const loginPasswordInputPlaceholder = "********";
 const checkBoxLabel = "Stay in after login";
-const signupText = "You can create a new account and";
-const signupLinkTitle = "Signup";
 const loginBTN = "Login";
+const textWithImage = {
+  text: "You can create a new account and",
+  link: { text: "Signup", url: "/SignupPage" },
+};
 
 export {
   loginHeaderTitle,
@@ -19,6 +21,5 @@ export {
   loginPasswordInputPlaceholder,
   checkBoxLabel,
   loginBTN,
-  signupText,
-  signupLinkTitle,
+  textWithImage,
 };
