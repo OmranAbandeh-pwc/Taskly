@@ -1,0 +1,13 @@
+
+@import "../../../../variables.scss";
+
+.createAccountText {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+}
+.createAccountText .link {
+  text-decoration: none;
+  color: $theme-color;
+}

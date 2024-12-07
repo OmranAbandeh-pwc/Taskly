@@ -1,4 +1,4 @@
-import styles from "./TextInput.module.scss";
+import styles from "../styles/InputStyles.module.scss";
 
 interface TextInputProps {
   label: string;
@@ -16,10 +16,10 @@ const TextInput: React.FC<TextInputProps> = ({
   onValueChange,
 }) => {
   return (
-    <div className={styles.textInputContainer}>
+    <div className={styles.inputContainer}>
       <label>{label}</label>
       <input
-        className={styles.textInput}
+        className={styles.input}
         type={type}
         placeholder={placeholder}
         value={value}
