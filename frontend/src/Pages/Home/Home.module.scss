@@ -1,3 +1,20 @@
-.container{
+@import "../../variables.scss";
 
+.container {
+  display: flex;
+  flex-direction: column;
+  margin-top: $header-hight;
+  height: calc(100vh - $header-hight);
+}
+
+.toolsBar {
+  padding-top: 10px !important;
+  padding-bottom: 10px !important;
+  margin-top: 10px;
+}
+
+@media (max-width: 768px) {
+  .toolsBar {
+    margin-top: 10px;
+  }
 }

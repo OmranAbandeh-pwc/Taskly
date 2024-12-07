@@ -1,18 +1,28 @@
-
 @import "../../../../variables.scss";
 
-.button{
-    height: 35px;
-    min-width: 80px;
-    background-color:transparent;
-    border: none;
-    border-radius: 4px;
-    font-weight: 700;
-    color: $gray-color;
-    cursor: pointer;
+.button {
+  height: 35px;
+  min-width: 80px;
+  background-color: transparent;
+  border: none;
+  border-radius: 4px;
+  font-weight: 700;
+  color: $gray-color;
+  cursor: pointer;
 }
 
-.active{
-    background-color: $theme-color;
-    color: white;
+.mobileButton {
+  height: 35px;
+  min-width: 80px;
+  background-color: transparent;
+  border: 1px solid $theme-color;
+  border-radius: 20px;
+  font-weight: 700;
+  color: $theme-color;
+  cursor: pointer;
+}
+
+.active {
+  background-color: $theme-color;
+  color: white;
 }

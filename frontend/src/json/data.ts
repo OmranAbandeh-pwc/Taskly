@@ -1,5 +1,6 @@
 export const cards = [
   {
+    id: 1,
     date: "23 Jun, 2018",
     title: "New Workplace",
     description:
@@ -7,6 +8,7 @@ export const cards = [
     dotColor: "red",
   },
   {
+    id: 2,
     date: "23 Jun, 2018",
     title: "New Workplace",
     description:
@@ -14,6 +16,7 @@ export const cards = [
     dotColor: "blue",
   },
   {
+    id: 3,
     date: "23 Jun, 2018",
     title: "New Workplace",
     description:
@@ -21,6 +24,7 @@ export const cards = [
     dotColor: "green",
   },
   {
+    id: 4,
     date: "23 Jun, 2018",
     title: "New Workplace",
     description:
@@ -28,6 +32,7 @@ export const cards = [
     dotColor: "orange",
   },
   {
+    id: 5,
     date: "23 Jun, 2018",
     title: "New Workplace",
     description:
@@ -35,6 +40,7 @@ export const cards = [
     dotColor: "red",
   },
   {
+    id: 6,
     date: "23 Jun, 2018",
     title: "New Workplace",
     description:
@@ -42,6 +48,7 @@ export const cards = [
     dotColor: "red",
   },
   {
+    id: 7,
     date: "23 Jun, 2018",
     title: "New Workplace",
     description:
