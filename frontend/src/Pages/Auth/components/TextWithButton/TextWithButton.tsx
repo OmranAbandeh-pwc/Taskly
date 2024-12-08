@@ -6,12 +6,12 @@ interface LinkProps {
   text: string;
   url: string;
 }
-interface TextWithButton {
+interface TextWithButtonProps {
   text: string;
   link: LinkProps;
 }
 
-const TextWithButton: React.FC<TextWithButton> = ({ text, link }) => {
+const TextWithButton: React.FC<TextWithButtonProps> = ({ text, link }) => {
   return (
     <div className={styles.createAccountText}>
       <Text text={text} />

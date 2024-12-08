@@ -85,7 +85,7 @@ const SignupPage = () => {
             onValueChange={setUserConfirmPassword}
             type={"password"}
           />
-          <Button title={signupBTN} onClick={handleSignup} />
+          <Button title={signupBTN} type="type-2" onClick={handleSignup} />
           <TextWithButton
             text={textWithButton.text}
             link={textWithButton.link}
