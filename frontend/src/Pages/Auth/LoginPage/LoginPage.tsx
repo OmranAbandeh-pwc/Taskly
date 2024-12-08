@@ -1,6 +1,5 @@
 import Button from "../../../components/common/Button/Button";
 import Picture from "../../../components/common/Picture/Picture";
-import Text from "../../../components/common/Text/Text";
 import TextInput from "../../../components/common/TextInput/TextInput";
 import styles from "./LoginPage.module.scss";
 import {
@@ -14,7 +13,6 @@ import {
   loginBTN,
   textWithImage,
 } from "../../../json/static/staticLoginPage";
-import { Link } from "react-router-dom";
 import CheckBox from "../../../components/common/CheckBox/CheckBox";
 import { useState } from "react";
 import { useResize } from "../../../hooks/useResize";
@@ -60,6 +58,7 @@ const LoginPage = () => {
             <Button
               className={styles.loginBTN}
               title={loginBTN}
+              type="type-2"
               onClick={handleLogin}
             />
             <TextWithButton
