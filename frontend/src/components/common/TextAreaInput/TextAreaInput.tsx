@@ -1,34 +1,34 @@
 import styles from "../styles/InputStyles.module.scss";
 
-interface TextInputProps {
+interface TextAreaInputProps {
   label: string;
   placeholder: string;
-  type: string;
-  className?: string;
   value: string;
+  className?: string;
   onValueChange: (value: string) => void;
+  rows?: number; // Optional: Number of rows in the textarea
 }
 
-const TextInput: React.FC<TextInputProps> = ({
+const TextAreaInput: React.FC<TextAreaInputProps> = ({
   label,
   placeholder,
-  type,
-  className,
   value,
+  className,
   onValueChange,
+  rows = 4, // Default rows set to 4
 }) => {
   return (
     <div className={`${styles.inputContainer} ${className}`}>
       <label>{label}</label>
-      <input
+      <textarea
         className={styles.input}
-        type={type}
         placeholder={placeholder}
         value={value}
+        rows={rows}
         onChange={(e) => onValueChange(e.target.value)}
       />
     </div>
   );
 };
 
-export default TextInput;
+export default TextAreaInput;

@@ -5,6 +5,8 @@ import { RiDeleteBin6Line } from "react-icons/ri";
 import { FiEdit } from "react-icons/fi";
 import { FaRegWindowClose } from "react-icons/fa";
 
+
+// TODO I need to create a static file 
 const TaskDestailsPage = () => {
   const navigate = useNavigate();
   const { id } = useParams();

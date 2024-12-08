@@ -6,11 +6,14 @@ import Button from "../common/Button/Button";
 import { IoAddCircleOutline } from "react-icons/io5";
 import { IoAddCircleSharp } from "react-icons/io5";
 import { useResize } from "../../hooks/useResize";
+import { useNavigate } from "react-router-dom";
 interface ToolsBarProps {
   className?: string;
 }
 
 const ToolsBar: React.FC<ToolsBarProps> = ({ className }) => {
+
+  const navigate = useNavigate();
   const [activeButton, setActiveButton] = useState(filterButtons[0].title); // Initial active button
   const { isMobile } = useResize();
 
@@ -40,7 +43,7 @@ const ToolsBar: React.FC<ToolsBarProps> = ({ className }) => {
           iconClass={styles.buttonIconClass}
           textStyles={styles.buttonTextClass}
           icon={<IoAddCircleOutline />}
-          onClick={() => {}}
+          onClick={() => navigate("/task/create")}
         />
       )}
     </div>

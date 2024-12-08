@@ -5,6 +5,7 @@ import TaskDestailsPage from "./Pages/TaskDestailsPage/TaskDestailsPage";
 import Header from "./components/Header/Header";
 import LoginPage from "./Pages/Auth/LoginPage/LoginPage";
 import SignupPage from "./Pages/Auth/SignupPage/SignupPage";
+import CreateTaskPage from "./Pages/CreateTaskPage/CreateTaskPage";
 
 function App() {
   const isUser = true;
@@ -16,6 +17,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/task/details/:id" element={<TaskDestailsPage />} />
+            <Route path="/task/create" element={<CreateTaskPage />} />
           </Routes>
         </>
       ) : (
