@@ -1,8 +1,5 @@
 
 import styles from "./SearchBar.module.scss";
-import IconButton from "../common/IconButton/IconButton";
-import Icon from "../common/Icon/Icon";
-import Text from "../common/Text/Text";
 import { IoSearchSharp } from "react-icons/io5";
 
 

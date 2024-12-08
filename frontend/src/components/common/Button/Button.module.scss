@@ -1,7 +1,15 @@
 
 @import "../../../variables.scss";
 
-.buttonContainer{
+.buttonContainer1{
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: $theme-color;
+    border-radius: 8px;
+}
+.buttonContainer2{
     cursor: pointer;
     display: flex;
     align-items: center;
