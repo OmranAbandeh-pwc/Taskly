@@ -7,7 +7,7 @@ import LoginPage from "./Pages/Auth/LoginPage/LoginPage";
 import SignupPage from "./Pages/Auth/SignupPage/SignupPage";
 
 function App() {
-  const isUser = false;
+  const isUser = true;
   return (
     <>
       {isUser ? (
@@ -15,7 +15,7 @@ function App() {
           <Header />
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/task/details" element={<TaskDestailsPage />} />
+            <Route path="/task/details/:id" element={<TaskDestailsPage />} />
           </Routes>
         </>
       ) : (
