@@ -5,9 +5,15 @@ import TextAreaInput from "../../components/common/TextAreaInput/TextAreaInput";
 import TextInput from "../../components/common/TextInput/TextInput";
 import styles from "./CreateTaskPage.module.scss";
 import { FaRegWindowClose } from "react-icons/fa";
+import {
+  titleInputLabel,
+  titleInputPlaceholder,
+  descriptionInputLabel,
+  descriptionInputPlaceholder,
+  createButtonText,
+} from "../../json/static/staticCreateTaskPage";
 
-
-// TODO I need to create a static file 
+// TODO I need to create a static file
 const CreateTaskPage = () => {
   const navigate = useNavigate();
 
@@ -30,22 +36,22 @@ const CreateTaskPage = () => {
 
         <div className={styles.fieldsContainer}>
           <TextInput
-            label={"Task Title"}
-            placeholder={""}
+            label={titleInputLabel}
+            placeholder={titleInputPlaceholder}
             type={"text"}
             className={styles.inputs}
             value={taskTitle}
             onValueChange={setTaskTitle}
           />
           <TextAreaInput
-            label={"Task Des"}
-            placeholder={""}
+            label={descriptionInputLabel}
+            placeholder={descriptionInputPlaceholder}
             className={styles.inputs}
             value={taskDescription}
             onValueChange={setTaskDescription}
           />
           <Button
-            title={"Create Task"}
+            title={createButtonText}
             type="type-1"
             className={styles.inputs}
             onClick={handleCreateTask}
