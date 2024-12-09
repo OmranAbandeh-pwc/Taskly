@@ -1,16 +1,16 @@
 @import "../../variables.scss";
 
-.container {
+.homeContainer {
   display: flex;
   flex-direction: column;
   margin-top: $header-height;
   height: calc(100vh - $header-height);
-}
 
-.toolsBar {
-  padding-top: 10px !important;
-  padding-bottom: 10px !important;
-  margin-top: 10px;
+  .toolsBar {
+    padding-top: 10px !important;
+    padding-bottom: 10px !important;
+    margin-top: 10px;
+  }
 }
 
 @media (max-width: 768px) {

@@ -11,6 +11,23 @@
   padding-top: 10px;
   padding-bottom: 10px;
   box-sizing: border-box;
+
+  .searchIcon {
+    font-size: 30px;
+    color: gray;
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+
+  .searchInput {
+    width: 100%;
+    border: none;
+    outline: none;
+    color: $gray-color;
+    font-size: 18px;
+    padding: 15px;
+    padding-inline: 10px;
+  }
 }
 @media (max-width: 768px) {
   .searchbarContainer {
@@ -18,22 +35,3 @@
     padding-bottom: 5px;
   }
 }
-
-.searchIcon{
-    font-size: 30px;
-    color: gray;
-    cursor: pointer;
-    flex-shrink: 0;
-}
-
-.searchInput {
-  width: 100%;
-  border: none;
-  outline: none;
-  color: $gray-color;
-  font-size: 18px;
-  padding: 15px;
-  padding-inline: 10px;
-}
-
-

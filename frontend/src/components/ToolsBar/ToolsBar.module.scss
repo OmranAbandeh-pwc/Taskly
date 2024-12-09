@@ -13,44 +13,41 @@
   overflow: scroll; /* or auto */
   scrollbar-width: none; /* this will make the scroll bar invisible*/
   -ms-overflow-style: none;
+
+  .filterButtonsContainer {
+    display: flex;
+    gap: 20px;
+  }
+
+  .addButton {
+    color: $theme-color;
+    font-weight: 600;
+    height: auto;
+    gap: 5px;
+  }
+
+  .buttonIconClass {
+    font-size: 22px;
+    display: flex;
+    align-items: center;
+  }
+  .buttonTextClass {
+    margin: 0;
+  }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 767px) {
   .toolsBar {
     padding-inline: 20px;
     margin-top: 5px;
     margin-bottom: 5px;
+
+    .buttonIconClass {
+      font-size: 50px;
+      color: $theme-color;
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+    }
   }
-}
-
-.filterButtonsContainer {
-  display: flex;
-  gap: 20px;
-}
-
-.addButton {
-  color: $theme-color;
-  font-weight: 600;
-  height: auto;
-  gap: 5px;
-}
-
-.buttonIconClass {
-  font-size: 22px;
-  display: flex;
-  align-items: center;
-}
-
-@media (max-width: 767px) {
-  .buttonIconClass {
-    font-size: 50px;
-    color: $theme-color;
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-  }
-}
-
-.buttonTextClass {
-  margin: 0;
 }
