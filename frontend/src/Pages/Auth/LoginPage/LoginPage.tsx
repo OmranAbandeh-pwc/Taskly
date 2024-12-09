@@ -22,12 +22,22 @@ import TextWithButton from "../components/TextWithButton/TextWithButton";
 const LoginPage = () => {
   const [userEmail, setUserEmail] = useState<string>("");
   const [userPassword, setUserPassword] = useState<string>("");
+  const [isRememberMeChecked, setIsRememberMeChecked] =
+    useState<boolean>(false);
   const { widthSize } = useResize();
 
   const handleLogin = () => {
     if (userEmail && userPassword) {
       console.log("User Email : ", userEmail);
       console.log("User Password : ", userPassword);
+      console.log("isRememberMeChecked: ", isRememberMeChecked);
+
+      if (isRememberMeChecked) {
+        localStorage.setItem("userToken", "f5$f%fd$dfv$sd#scd@sdc%xcv$sdv");
+      } else {
+        sessionStorage.setItem("userToken", "f5$f%fd$dfv$sd#scd@sdc%xcv$sdv");
+      }
+      window.location.reload();
     }
   };
 
@@ -54,7 +64,10 @@ const LoginPage = () => {
               onValueChange={setUserPassword}
               type={"password"}
             />
-            <CheckBox label={checkBoxLabel} />
+            <CheckBox
+              label={checkBoxLabel}
+              onCheckChange={setIsRememberMeChecked}
+            />
             <Button
               className={styles.loginBTN}
               title={loginBTN}

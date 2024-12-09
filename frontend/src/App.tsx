@@ -8,10 +8,12 @@ import SignupPage from "./Pages/Auth/SignupPage/SignupPage";
 import CreateTaskPage from "./Pages/CreateTaskPage/CreateTaskPage";
 
 function App() {
-  const isUser = false;
+  const userToken =
+    localStorage.getItem("userToken") || sessionStorage.getItem("userToken");
+
   return (
     <>
-      {isUser ? (
+      {userToken ? (
         <>
           <Header />
           <Routes>

@@ -18,10 +18,31 @@
     align-items: center;
     gap: 10px;
 
+    .userIconContainer {
+      position: relative;
+      display: inline-block;
+    }
+
+    .drawerContainer {
+      display: none;
+      position: absolute;
+      right: 0px;
+      top: 100%;
+      z-index: 10;
+      background-color: white;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+      padding: 10px;
+      min-width: 200px;
+    }
+    .userIconContainer:hover .drawerContainer {
+      display: block;
+    }
     .userIcon {
       height: 40px !important;
       width: 40px !important;
       border-radius: 100% !important;
+      cursor: pointer;
       overflow: hidden;
     }
 
