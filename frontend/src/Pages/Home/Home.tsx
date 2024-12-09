@@ -6,7 +6,7 @@ import ToolsBar from "../../components/ToolsBar/ToolsBar";
 
 const Home = () => {
   return (
-    <div className={styles.container}>
+    <div className={styles.homeContainer}>
       <SearchBar />
       <ToolsBar className={styles.toolsBar} />
       <TaskCardsSection cards={cards} />
