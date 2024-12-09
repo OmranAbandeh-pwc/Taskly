@@ -12,28 +12,22 @@
   display: flex;
   justify-content: end;
   align-items: center;
-}
 
-.sidebarIcon {
-  font-size: 30px;
-  color: $white-color;
-  cursor: pointer;
-}
+  .userInfoContainer {
+    display: flex;
+    align-items: center;
+    gap: 10px;
 
-.userInfoContainer {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
+    .userIcon {
+      height: 40px !important;
+      width: 40px !important;
+      border-radius: 100% !important;
+      overflow: hidden;
+    }
 
-.userIcon {
-  height: 40px !important;
-  width: 40px !important;
-  border-radius: 100% !important;
-  overflow: hidden;
-}
-
-.userNameLabel {
-  white-space: nowrap;
-  color: $white-color;
+    .userNameLabel {
+      white-space: nowrap;
+      color: $white-color;
+    }
+  }
 }

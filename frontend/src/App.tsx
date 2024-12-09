@@ -8,7 +8,7 @@ import SignupPage from "./Pages/Auth/SignupPage/SignupPage";
 import CreateTaskPage from "./Pages/CreateTaskPage/CreateTaskPage";
 
 function App() {
-  const isUser = true;
+  const isUser = false;
   return (
     <>
       {isUser ? (
