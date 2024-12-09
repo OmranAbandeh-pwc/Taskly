@@ -1,15 +1,15 @@
-.inputContainer{
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
+.inputContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 
-.inputContainer .input{
+  .input {
     border: none;
     outline: none;
-    background-color: #F3F4F6;
+    background-color: #f3f4f6;
     padding-top: 20px;
     padding-bottom: 20px;
     padding-inline: 40px;
     border-radius: 8px;
+  }
 }

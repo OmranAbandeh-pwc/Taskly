@@ -12,7 +12,6 @@ interface ToolsBarProps {
 }
 
 const ToolsBar: React.FC<ToolsBarProps> = ({ className }) => {
-
   const navigate = useNavigate();
   const [activeButton, setActiveButton] = useState(filterButtons[0].title); // Initial active button
   const { isMobile } = useResize();
@@ -35,7 +34,10 @@ const ToolsBar: React.FC<ToolsBarProps> = ({ className }) => {
       </div>
 
       {isMobile ? (
-        <IoAddCircleSharp className={styles.buttonIconClass} />
+        <IoAddCircleSharp
+          className={styles.buttonIconClass}
+          onClick={() => navigate("/task/create")}
+        />
       ) : (
         <Button
           title={"Add new note"}

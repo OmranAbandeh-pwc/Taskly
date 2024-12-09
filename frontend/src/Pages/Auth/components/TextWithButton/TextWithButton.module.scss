@@ -1,4 +1,3 @@
-
 @import "../../../../variables.scss";
 
 .createAccountText {
@@ -6,8 +5,9 @@
   align-items: center;
   justify-content: center;
   gap: 4px;
-}
-.createAccountText .link {
-  text-decoration: none;
-  color: $theme-color;
+
+  .link {
+    text-decoration: none;
+    color: $theme-color;
+  }
 }
