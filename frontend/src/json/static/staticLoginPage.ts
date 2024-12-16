@@ -11,6 +11,7 @@ const textWithImage = {
   text: "You can create a new account and",
   link: { text: "Signup", url: "/SignupPage" },
 };
+const emptyFieldText = "Please don't leave this field empty";
 
 export {
   loginHeaderTitle,
@@ -22,4 +23,5 @@ export {
   checkBoxLabel,
   loginBTN,
   textWithImage,
+  emptyFieldText,
 };
