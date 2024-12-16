@@ -1,0 +1,26 @@
+
+
+1- First we need to prepare the package.json file by using this command line : 
+    
+    - "npm init -y"
+
+2- then you need to install "express" using this command : 
+
+    - "npm i express"
+
+3- install nodemon to make the server update whenever you change anything
+in the code using this command line to install : 
+
+    - "npm i -g nodemon"
+
+    - then use this command to make the server run "nodemon server.js"
+
+    - or we can create a new script in the package.json
+
+     for example "dev": "nodemon server.js" then run this command line "npm run dev"
+
+
+4- then we need to install "dotenv" package to be able to get the variables 
+from the .env file to install it use this command line : 
+
+    - "npm i dotenv"
