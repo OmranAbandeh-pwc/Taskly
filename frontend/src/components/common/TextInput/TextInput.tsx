@@ -6,6 +6,7 @@ interface TextInputProps {
   type: string;
   className?: string;
   value: string;
+  errorMessage?: string;
   onValueChange: (value: string) => void;
 }
 
@@ -15,6 +16,7 @@ const TextInput: React.FC<TextInputProps> = ({
   type,
   className,
   value,
+  errorMessage,
   onValueChange,
 }) => {
   return (
@@ -27,6 +29,9 @@ const TextInput: React.FC<TextInputProps> = ({
         value={value}
         onChange={(e) => onValueChange(e.target.value)}
       />
+      <span className={styles.errorMessage}>
+        {errorMessage && errorMessage}
+      </span>
     </div>
   );
 };
