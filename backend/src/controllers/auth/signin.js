@@ -16,7 +16,7 @@ const signinController = async (req, res) => {
       .query(userQuery);
 
     if (result.recordset.length === 0) {
-      return res.status(404).json({ error: "User not found" });
+      return res.status(404).json({ status: 404, message: "User not found" });
     }
 
     const user = result.recordset[0];
@@ -24,7 +24,7 @@ const signinController = async (req, res) => {
     // Compare the provided password with the stored hashed password
     const isPasswordMatch = await bcrypt.compare(password, user.password);
     if (!isPasswordMatch) {
-      return res.status(401).json({ error: "Invalid credentials" });
+      return res.status(401).json({ status: 401, message: "Invalid Password" });
     }
 
     // Generate JWT token
@@ -45,7 +45,6 @@ const signinController = async (req, res) => {
       message: "Signin successful",
       token,
       user: {
-        id: user.id,
         firstName: user.firstName,
         secondName: user.secondName,
         email: user.email,

@@ -12,32 +12,67 @@ import {
   checkBoxLabel,
   loginBTN,
   textWithImage,
+  emptyFieldText,
 } from "../../../json/static/staticLoginPage";
 import CheckBox from "../../../components/common/CheckBox/CheckBox";
 import { useState } from "react";
 import { useResize } from "../../../hooks/useResize";
 import TitleSection from "../../../components/common/TitleSection/TitleSection";
 import TextWithButton from "../components/TextWithButton/TextWithButton";
+import { PAGES } from "../../../shared/routes";
 
 const LoginPage = () => {
   const [userEmail, setUserEmail] = useState<string>("");
+  const [emailErrorMessage, setEmailErrorMessage] = useState<string>("");
   const [userPassword, setUserPassword] = useState<string>("");
+  const [passwordErrorMessage, setPasswordErrorMessage] = useState<string>("");
   const [isRememberMeChecked, setIsRememberMeChecked] =
     useState<boolean>(false);
   const { widthSize } = useResize();
 
   const handleLogin = () => {
-    if (userEmail && userPassword) {
-      console.log("User Email : ", userEmail);
-      console.log("User Password : ", userPassword);
-      console.log("isRememberMeChecked: ", isRememberMeChecked);
+    setEmailErrorMessage("");
+    setPasswordErrorMessage("");
+    if (userEmail === "" && userPassword === "") {
+      setEmailErrorMessage(emptyFieldText);
+      setPasswordErrorMessage(emptyFieldText);
+    } else if (userEmail === "") {
+      setEmailErrorMessage(emptyFieldText);
+    } else if (userPassword === "") {
+      setPasswordErrorMessage(emptyFieldText);
+    } else {
+      const myHeaders = new Headers();
+      myHeaders.append("Content-Type", "application/json");
 
-      if (isRememberMeChecked) {
-        localStorage.setItem("userToken", "f5$f%fd$dfv$sd#scd@sdc%xcv$sdv");
-      } else {
-        sessionStorage.setItem("userToken", "f5$f%fd$dfv$sd#scd@sdc%xcv$sdv");
-      }
-      window.location.reload();
+      const raw = JSON.stringify({
+        email: userEmail,
+        password: userPassword,
+      });
+
+      const requestOptions: any = {
+        method: "POST",
+        headers: myHeaders,
+        body: raw,
+        redirect: "follow",
+      };
+
+      fetch(PAGES.SIGNIN, requestOptions)
+        .then((response) => response.json())
+        .then((result) => {
+          if (result.status === 200) {
+            if (isRememberMeChecked) {
+              localStorage.setItem("userToken", result.token);
+            } else {
+              sessionStorage.setItem("userToken", result.token);
+            }
+            window.location.reload();
+          } else if (result.status === 404) {
+            setEmailErrorMessage(result.message);
+          } else if (result.status === 401) {
+            setPasswordErrorMessage(result.message);
+          }
+        })
+        .catch((error) => console.error(error));
     }
   };
 
@@ -56,6 +91,7 @@ const LoginPage = () => {
               value={userEmail}
               onValueChange={setUserEmail}
               type={"email"}
+              errorMessage={emailErrorMessage}
             />
             <TextInput
               label={loginPasswordInputLabel}
@@ -63,6 +99,7 @@ const LoginPage = () => {
               value={userPassword}
               onValueChange={setUserPassword}
               type={"password"}
+              errorMessage={passwordErrorMessage}
             />
             <CheckBox
               label={checkBoxLabel}
