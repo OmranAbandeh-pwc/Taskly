@@ -1,0 +1,26 @@
+
+
+
+1- Create the Users table : 
+
+CREATE TABLE USERS (
+    id NVARCHAR(100) NOT NULL PRIMARY KEY,
+    firstName NVARCHAR(100) NOT NULL,
+    secondName NVARCHAR(100) NOT NULL,
+    birthday DATE NOT NULL,
+    email NVARCHAR(255) NOT NULL UNIQUE,
+    password NVARCHAR(255) NOT NULL
+);
+
+
+2- Create the Tasks table:
+
+CREATE TABLE Tasks (
+    id INT IDENTITY(1,1) PRIMARY KEY,         -- Auto-incrementing unique ID
+    userid NVARCHAR(255) NOT NULL,             -- User ID (can be a string, e.g., username, email, etc.)
+    title NVARCHAR(255) NOT NULL,              -- Title of the task (supports Unicode)
+    subTitle NVARCHAR(MAX),                    -- Subtitle or description of the task
+    importance NVARCHAR(50) NOT NULL           -- Importance as a string (e.g., 'Low', 'Medium', 'High')
+);
+
+
