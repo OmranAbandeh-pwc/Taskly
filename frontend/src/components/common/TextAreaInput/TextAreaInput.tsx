@@ -5,6 +5,7 @@ interface TextAreaInputProps {
   placeholder: string;
   value: string;
   className?: string;
+  errorMessage?: string;
   onValueChange: (value: string) => void;
   rows?: number; // Optional: Number of rows in the textarea
 }
@@ -14,6 +15,7 @@ const TextAreaInput: React.FC<TextAreaInputProps> = ({
   placeholder,
   value,
   className,
+  errorMessage,
   onValueChange,
   rows = 4, // Default rows set to 4
 }) => {
@@ -27,6 +29,9 @@ const TextAreaInput: React.FC<TextAreaInputProps> = ({
         rows={rows}
         onChange={(e) => onValueChange(e.target.value)}
       />
+      <span className={styles.errorMessage}>
+        {errorMessage && errorMessage}
+      </span>
     </div>
   );
 };
