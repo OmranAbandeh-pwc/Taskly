@@ -12,6 +12,6 @@ export const API = {
 
   },
   post: {
-    SEND_ITINERARY: `/bin/users/senditinerary`
+    ADD_TASK: `${WINDOW_PATH}/api/v1/add/task`
   },
 };

@@ -4,7 +4,7 @@ const DrawerBox: React.FC<any> = ({ className }) => {
   const handleLogout = () => {
     localStorage.removeItem("userToken");
     sessionStorage.removeItem("userToken");
-    window.location.reload();
+    window.location.href = "/";
   };
   return (
     <div className={`${styles.drawerContainer} ${className}`}>
