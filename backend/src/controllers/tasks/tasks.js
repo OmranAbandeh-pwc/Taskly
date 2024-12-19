@@ -1,5 +1,7 @@
 const { sql, connectToDatabase } = require("../../dbConfig");
 
+
+// TODO add date to the task
 // Add a new task ----------------------------------------------------------------------
 const addNewTaskController = async (req, res) => {
   const userid = req.userid;

@@ -4,12 +4,34 @@ import Text from "../../components/common/Text/Text";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { FiEdit } from "react-icons/fi";
 import { FaRegWindowClose } from "react-icons/fa";
-
+import { API } from "../../shared/routes";
+import { useEffect, useState } from "react";
+import { TaskCardProps } from "../../components/TaskCardsSection/TaskCardsSectionTypes";
 
 const TaskDestailsPage = () => {
   const navigate = useNavigate();
   const { id } = useParams();
+  const [card, setCard] = useState<TaskCardProps>();
 
+  const fetchDetails = () => {
+    const requestOptions: any = {
+      method: "GET",
+      redirect: "follow",
+    };
+
+    fetch(`${API.get.CARD_DETAILS}/${id}`, requestOptions)
+      .then((response) => response.json())
+      .then((result) => {
+        if (result.status === 200) {
+          setCard(result.task);
+        }
+      })
+      .catch((error) => console.error(error));
+  };
+
+  useEffect(() => {
+    fetchDetails();
+  }, []);
   const handleEdit = () => {
     console.log("Edit Card : ", id);
   };
@@ -18,7 +40,7 @@ const TaskDestailsPage = () => {
     console.log("Delete Card : ", id);
   };
 
-  return (
+  return card ? (
     <div className={styles.mainContainer}>
       <div className={styles.innerContainer}>
         <div className={styles.actionsBar}>
@@ -39,14 +61,13 @@ const TaskDestailsPage = () => {
             style={{ backgroundColor: "red" }}
           ></span>
 
-          <Text styles={styles.cardTitle} text="New Workplace" />
+          <Text styles={styles.cardTitle} text={card.title} />
         </div>
-        <Text
-          styles={styles.cardSubTitle}
-          text="You can now view frontend in the browser, Note that the development build is not optimized. To create a production build, use npm run build.You can now view frontend in the browser, Note that the development build is not optimized. To create a production build, use npm run build."
-        />
+        <Text styles={styles.cardSubTitle} text={card.subTitle} />
       </div>
     </div>
+  ) : (
+    <></>
   );
 };
 

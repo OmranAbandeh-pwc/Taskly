@@ -6,10 +6,9 @@ import Header from "./components/Header/Header";
 import LoginPage from "./Pages/Auth/LoginPage/LoginPage";
 import SignupPage from "./Pages/Auth/SignupPage/SignupPage";
 import CreateTaskPage from "./Pages/CreateTaskPage/CreateTaskPage";
+import { userToken } from "./shared/variables";
 
 function App() {
-  const userToken =
-    localStorage.getItem("userToken") || sessionStorage.getItem("userToken");
 
   return (
     <>

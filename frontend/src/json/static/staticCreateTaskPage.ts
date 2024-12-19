@@ -3,6 +3,14 @@ const titleInputPlaceholder = "My Task Title";
 const descriptionInputLabel = "Enter Task Description";
 const descriptionInputPlaceholder = "My Task Description";
 const createButtonText = "Create Task";
+const emptyFieldText = "Please don't leave this field empty";
+const dropdownPlaceholder = "Select a level";
+const taskLevels = [
+  { title: "Low", value: "low" },
+  { title: "Medum", value: "medum" },
+  { title: "High", value: "high" },
+  { title: "Highest", value: "highest" },
+];
 
 export {
   titleInputLabel,
@@ -10,4 +18,7 @@ export {
   descriptionInputLabel,
   descriptionInputPlaceholder,
   createButtonText,
+  emptyFieldText,
+  dropdownPlaceholder,
+  taskLevels,
 };

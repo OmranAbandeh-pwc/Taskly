@@ -11,8 +11,8 @@ const TaskCardsSection: React.FC<TaskCardsSectionProps> = ({ cards }) => {
           id={card.id}
           date={card.date}
           title={card.title}
-          description={card.description}
-          dotColor={card.dotColor}
+          subTitle={card.subTitle}
+          importance={card.importance}
         />
       ))}
     </div>
