@@ -18,6 +18,9 @@ const textWithButton = {
   text: "if you already have an account please",
   link: { text: "Login", url: "/" },
 };
+const emptyFieldText = "Please don't leave this field empty";
+const invalidEmail = "Invalid email";
+const passwordStrengthText = "Password must be at least 6 characters";
 
 export {
   signupHeaderTitle,
@@ -36,4 +39,7 @@ export {
   userConfirmPasswordPlaceholder,
   signupBTN,
   textWithButton,
+  emptyFieldText,
+  invalidEmail,
+  passwordStrengthText,
 };

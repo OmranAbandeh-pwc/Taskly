@@ -1,4 +1,3 @@
-import { useState } from "react";
 import TextInput from "../../../components/common/TextInput/TextInput";
 import styles from "./SignupPage.module.scss";
 import {
@@ -18,81 +17,187 @@ import {
   userConfirmPasswordPlaceholder,
   signupBTN,
   textWithButton,
+  emptyFieldText,
+  invalidEmail,
+  passwordStrengthText,
 } from "../../../json/static/staticSignupPage";
 import DateInput from "../../../components/common/DateInput/DateInput";
 import TitleSection from "../../../components/common/TitleSection/TitleSection";
 import Button from "../../../components/common/Button/Button";
 import TextWithButton from "../components/TextWithButton/TextWithButton";
+import { Formik } from "formik";
+import * as Yup from "yup";
+import { PAGES } from "../../../shared/routes";
+
+interface FormValues {
+  firstName: string;
+  secondName: string;
+  birthday: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
+}
 
 const SignupPage = () => {
-  const [firstName, setFirstName] = useState<string>("");
-  const [secondName, setSecondName] = useState<string>("");
-  const [birthday, setBirthday] = useState<string>("");
-  const [userEmail, setUserEmail] = useState<string>("");
-  const [userPassword, setUserPassword] = useState<string>("");
-  const [userConfirmPassword, setUserConfirmPassword] = useState<string>("");
+  const handleSignup = (
+    values: FormValues,
+    setFieldError: (field: string, message: string) => void
+  ) => {
+    const myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
 
-  const handleSignup = () => {
-    console.log("Sginup Clicked");
+    const raw = JSON.stringify({
+      firstName: values.firstName,
+      secondName: values.secondName,
+      birthday: values.birthday,
+      email: values.email,
+      password: values.password,
+      confirmPassword: values.confirmPassword,
+    });
+
+    const requestOptions: any = {
+      method: "POST",
+      headers: myHeaders,
+      body: raw,
+      redirect: "follow",
+    };
+
+    fetch(PAGES.SIGNUP, requestOptions)
+      .then((response) => response.json())
+      .then((result) => {
+        if (result.status === 400) {
+          setFieldError("email", result.message);
+        }
+      })
+      .catch((error) => console.error(error));
   };
+
+  // Initial values
+  const initialValues: FormValues = {
+    firstName: "",
+    secondName: "",
+    birthday: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+  };
+
+  // Validation schema (using Yup)
+  const validationSchema = Yup.object({
+    firstName: Yup.string().required(emptyFieldText),
+    secondName: Yup.string().required(emptyFieldText),
+    birthday: Yup.string().required(emptyFieldText),
+    email: Yup.string().email(invalidEmail).required(emptyFieldText),
+    password: Yup.string()
+      .min(6, passwordStrengthText)
+      .required(emptyFieldText),
+    confirmPassword: Yup.string()
+      .min(6, passwordStrengthText)
+      .required(emptyFieldText),
+  });
+
   return (
-    <div className={styles.signupPageContainer}>
-      <div className={styles.signupPageInnerContainer}>
-        <TitleSection
-          title={signupHeaderTitle}
-          subTitle={signupHeaderSubTitle}
-          className={styles.titleSection}
-        />
-        <div className={styles.signupContainer}>
-          <TextInput
-            label={firstNameLabel}
-            placeholder={firstNamePlaceholder}
-            value={firstName}
-            onValueChange={setFirstName}
-            type={"text"}
-          />
-          <TextInput
-            label={secondNameLabel}
-            placeholder={secondNamePlaceholder}
-            value={secondName}
-            onValueChange={setSecondName}
-            type={"text"}
-          />
-          <DateInput
-            label={birthdayLabel}
-            placeholder={birthdayPlaceholder}
-            value={birthday}
-            onValueChange={setBirthday}
-          />
-          <TextInput
-            label={userEmailLabel}
-            placeholder={userEmailPlaceholder}
-            value={userEmail}
-            onValueChange={setUserEmail}
-            type={"email"}
-          />
-          <TextInput
-            label={userPasswordLabel}
-            placeholder={userPasswordPlaceholder}
-            value={userPassword}
-            onValueChange={setUserPassword}
-            type={"password"}
-          />
-          <TextInput
-            label={userConfirmPasswordLabel}
-            placeholder={userConfirmPasswordPlaceholder}
-            value={userConfirmPassword}
-            onValueChange={setUserConfirmPassword}
-            type={"password"}
-          />
-          <Button title={signupBTN} type="type-2" onClick={handleSignup} />
-          <TextWithButton
-            text={textWithButton.text}
-            link={textWithButton.link}
-          />
-        </div>
-      </div>
-    </div>
+    <Formik
+      initialValues={initialValues}
+      validationSchema={validationSchema}
+      onSubmit={(values, { setFieldError }) => {
+        handleSignup(values, setFieldError);
+      }}
+    >
+      {(formik) => (
+        <form onSubmit={formik.handleSubmit}>
+          <div className={styles.signupPageContainer}>
+            <div className={styles.signupPageInnerContainer}>
+              <TitleSection
+                title={signupHeaderTitle}
+                subTitle={signupHeaderSubTitle}
+                className={styles.titleSection}
+              />
+              <div className={styles.signupContainer}>
+                <TextInput
+                  label={firstNameLabel}
+                  placeholder={firstNamePlaceholder}
+                  value={formik.values.firstName}
+                  onValueChange={formik.handleChange("firstName")}
+                  type={"text"}
+                  errorMessage={
+                    formik.touched.firstName
+                      ? (formik.errors.firstName as string)
+                      : ""
+                  }
+                />
+                <TextInput
+                  label={secondNameLabel}
+                  placeholder={secondNamePlaceholder}
+                  value={formik.values.secondName}
+                  onValueChange={formik.handleChange("secondName")}
+                  type={"text"}
+                  errorMessage={
+                    formik.touched.secondName
+                      ? (formik.errors.secondName as string)
+                      : ""
+                  }
+                />
+                <DateInput
+                  label={birthdayLabel}
+                  placeholder={birthdayPlaceholder}
+                  value={formik.values.birthday}
+                  onValueChange={formik.handleChange("birthday")}
+                  errorMessage={
+                    formik.touched.birthday
+                      ? (formik.errors.birthday as string)
+                      : ""
+                  }
+                />
+                <TextInput
+                  label={userEmailLabel}
+                  placeholder={userEmailPlaceholder}
+                  value={formik.values.email}
+                  onValueChange={formik.handleChange("email")}
+                  type={"email"}
+                  errorMessage={
+                    formik.touched.email ? (formik.errors.email as string) : ""
+                  }
+                />
+                <TextInput
+                  label={userPasswordLabel}
+                  placeholder={userPasswordPlaceholder}
+                  value={formik.values.password}
+                  onValueChange={formik.handleChange("password")}
+                  type={"password"}
+                  errorMessage={
+                    formik.touched.password
+                      ? (formik.errors.password as string)
+                      : ""
+                  }
+                />
+                <TextInput
+                  label={userConfirmPasswordLabel}
+                  placeholder={userConfirmPasswordPlaceholder}
+                  value={formik.values.confirmPassword}
+                  onValueChange={formik.handleChange("confirmPassword")}
+                  type={"password"}
+                  errorMessage={
+                    formik.touched.confirmPassword
+                      ? (formik.errors.confirmPassword as string)
+                      : ""
+                  }
+                />
+                <Button
+                  title={signupBTN}
+                  type="type-2"
+                  onClick={formik.handleSubmit}
+                />
+                <TextWithButton
+                  text={textWithButton.text}
+                  link={textWithButton.link}
+                />
+              </div>
+            </div>
+          </div>
+        </form>
+      )}
+    </Formik>
   );
 };
 
