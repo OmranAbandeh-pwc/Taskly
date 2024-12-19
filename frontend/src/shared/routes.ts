@@ -1,5 +1,4 @@
-
-const WINDOW_PATH = "http://localhost:5000"
+const WINDOW_PATH = "http://localhost:5000";
 
 export const PAGES = {
   SIGNIN: `${WINDOW_PATH}/api/v1/signin`,
@@ -8,10 +7,10 @@ export const PAGES = {
 
 export const API = {
   get: {
-    EXPERIENCE_DATA: ``
-
+    GET_CARDS: `${WINDOW_PATH}/api/v1/tasks`,
+    CARD_DETAILS: `${WINDOW_PATH}/api/v1/get/task`,
   },
   post: {
-    ADD_TASK: `${WINDOW_PATH}/api/v1/add/task`
+    ADD_TASK: `${WINDOW_PATH}/api/v1/add/task`,
   },
 };

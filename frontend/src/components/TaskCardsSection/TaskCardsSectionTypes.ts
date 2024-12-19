@@ -1,9 +1,9 @@
 export interface TaskCardProps {
   id: number;
-  date: string;
+  date?: string;
   title: string;
-  description: string;
-  dotColor: string;
+  subTitle: string;
+  importance: string;
 }
 
 export interface TaskCardsSectionProps {
