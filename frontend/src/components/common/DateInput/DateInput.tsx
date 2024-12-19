@@ -5,6 +5,7 @@ interface DateInputProps {
   label: string;
   placeholder: string;
   value: string;
+  errorMessage?: string;
   onValueChange: (value: string) => void;
 }
 
@@ -12,6 +13,7 @@ const DateInput: React.FC<DateInputProps> = ({
   label,
   placeholder,
   value,
+  errorMessage,
   onValueChange,
 }) => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -42,9 +44,7 @@ const DateInput: React.FC<DateInputProps> = ({
 
   return (
     <div className={styles.inputContainer}>
-      <label htmlFor="date">
-        {label}
-      </label>
+      <label htmlFor="date">{label}</label>
       <input
         id="date"
         type="text"
@@ -54,6 +54,9 @@ const DateInput: React.FC<DateInputProps> = ({
         onChange={handleChange}
         maxLength={10} // Limit input to 10 characters
       />
+      <span className={styles.errorMessage}>
+        {errorMessage && errorMessage}
+      </span>
     </div>
   );
 };
