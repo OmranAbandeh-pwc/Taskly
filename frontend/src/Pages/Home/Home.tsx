@@ -9,8 +9,10 @@ import { TaskCardProps } from "../../components/TaskCardsSection/TaskCardsSectio
 
 const Home = () => {
   const [cards, setCards] = useState<TaskCardProps[]>();
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
-  const fetchData = () => {
+  const fetchData = async () => {
+    setIsLoading(true);
     const myHeaders = new Headers();
     myHeaders.append("Authorization", `Bearer ${userToken}`);
 
@@ -20,14 +22,16 @@ const Home = () => {
       redirect: "follow",
     };
 
-    fetch(API.get.GET_CARDS, requestOptions)
+    await fetch(API.get.GET_CARDS, requestOptions)
       .then((response) => response.json())
       .then((result) => {
         if (result.status === 200) {
           setCards(result.tasks);
+          setIsLoading(false);
         }
       })
       .catch((error) => console.error(error));
+    setIsLoading(false);
   };
 
   useEffect(() => {
@@ -37,7 +41,7 @@ const Home = () => {
     <div className={styles.homeContainer}>
       <SearchBar />
       <ToolsBar className={styles.toolsBar} />
-      {cards ? <TaskCardsSection cards={cards} /> : ""}
+      {<TaskCardsSection cards={cards ? cards : []} isLoading={isLoading} />}
     </div>
   );
 };
