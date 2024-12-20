@@ -32,12 +32,25 @@ const TaskDestailsPage = () => {
   useEffect(() => {
     fetchDetails();
   }, []);
+
   const handleEdit = () => {
     console.log("Edit Card : ", id);
   };
 
   const handleDelete = () => {
-    console.log("Delete Card : ", id);
+    const requestOptions: any = {
+      method: "DELETE",
+      redirect: "follow",
+    };
+
+    fetch(`${API.delete.DELETE_TASK}/${id}`, requestOptions)
+      .then((response) => response.json())
+      .then((result) => {
+        if (result.status === 200) {
+          navigate("/");
+        }
+      })
+      .catch((error) => console.error(error));
   };
 
   return card ? (

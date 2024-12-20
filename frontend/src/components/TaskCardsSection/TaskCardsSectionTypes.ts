@@ -8,4 +8,5 @@ export interface TaskCardProps {
 
 export interface TaskCardsSectionProps {
   cards: TaskCardProps[];
+  isLoading: boolean;
 }

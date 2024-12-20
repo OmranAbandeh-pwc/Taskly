@@ -9,6 +9,16 @@
   overflow-y: auto;
 }
 
+.loaderSection{
+  padding-inline: 50px;
+  padding-top: 10px;
+  padding-bottom: 20px;
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 @media (max-width: 1024px) {
   .cardsSection {
     grid-template-columns: repeat(3, 1fr);

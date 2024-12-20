@@ -13,4 +13,7 @@ export const API = {
   post: {
     ADD_TASK: `${WINDOW_PATH}/api/v1/add/task`,
   },
+  delete: {
+    DELETE_TASK:`${WINDOW_PATH}/api/v1/delete`
+  }
 };
