@@ -33,10 +33,6 @@ const TaskDestailsPage = () => {
     fetchDetails();
   }, []);
 
-  const handleEdit = () => {
-    console.log("Edit Card : ", id);
-  };
-
   const handleDelete = () => {
     const requestOptions: any = {
       method: "DELETE",
@@ -57,7 +53,10 @@ const TaskDestailsPage = () => {
     <div className={styles.mainContainer}>
       <div className={styles.innerContainer}>
         <div className={styles.actionsBar}>
-          <FiEdit className={styles.actionIcon} onClick={handleEdit} />
+          <FiEdit
+            className={styles.actionIcon}
+            onClick={() => navigate(`/task/edit/${id}`)}
+          />
           <RiDeleteBin6Line
             className={styles.actionIcon}
             onClick={handleDelete}

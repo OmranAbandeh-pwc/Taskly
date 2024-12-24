@@ -11,6 +11,7 @@ const taskLevels = [
   { title: "High", value: "high" },
   { title: "Highest", value: "highest" },
 ];
+const editButtonText = "Edit Task";
 
 export {
   titleInputLabel,
@@ -21,4 +22,5 @@ export {
   emptyFieldText,
   dropdownPlaceholder,
   taskLevels,
+  editButtonText,
 };
