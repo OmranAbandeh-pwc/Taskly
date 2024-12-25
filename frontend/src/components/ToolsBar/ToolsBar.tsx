@@ -7,6 +7,8 @@ import { IoAddCircleOutline } from "react-icons/io5";
 import { IoAddCircleSharp } from "react-icons/io5";
 import { useResize } from "../../hooks/useResize";
 import { useNavigate } from "react-router-dom";
+import { addTaskText } from "../../json/static/staticGeneral";
+import { PAGES } from "../../shared/routes";
 interface ToolsBarProps {
   className?: string;
 }
@@ -36,16 +38,16 @@ const ToolsBar: React.FC<ToolsBarProps> = ({ className }) => {
       {isMobile ? (
         <IoAddCircleSharp
           className={styles.buttonIconClass}
-          onClick={() => navigate("/task/create")}
+          onClick={() => navigate(PAGES.CREATE_TASK_PAGE)}
         />
       ) : (
         <Button
-          title={"Add new note"}
+          title={addTaskText}
           className={styles.addButton}
           iconClass={styles.buttonIconClass}
           textStyles={styles.buttonTextClass}
           icon={<IoAddCircleOutline />}
-          onClick={() => navigate("/task/create")}
+          onClick={() => navigate(PAGES.CREATE_TASK_PAGE)}
         />
       )}
     </div>

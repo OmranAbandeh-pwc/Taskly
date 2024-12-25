@@ -11,6 +11,7 @@ const GET_ALL_TASKS = "/tasks";
 const GET_TASK = "/get/task/:id";
 const UPDATE_TASK = "/update/:id";
 const DELETE_TASK = "/delete/:id";
+const GET_USER_DETAILS = "/user";
 
 module.exports = {
   MAIN_API,
@@ -21,4 +22,5 @@ module.exports = {
   GET_TASK,
   UPDATE_TASK,
   DELETE_TASK,
+  GET_USER_DETAILS,
 };

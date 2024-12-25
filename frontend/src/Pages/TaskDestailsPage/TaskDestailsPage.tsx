@@ -4,7 +4,7 @@ import Text from "../../components/common/Text/Text";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { FiEdit } from "react-icons/fi";
 import { FaRegWindowClose } from "react-icons/fa";
-import { API } from "../../shared/routes";
+import { API, PAGES } from "../../shared/routes";
 import { useEffect, useState } from "react";
 import { TaskCardProps } from "../../components/TaskCardsSection/TaskCardsSectionTypes";
 
@@ -43,7 +43,7 @@ const TaskDestailsPage = () => {
       .then((response) => response.json())
       .then((result) => {
         if (result.status === 200) {
-          navigate("/");
+          navigate(PAGES.INITIAL_PAGE);
         }
       })
       .catch((error) => console.error(error));
@@ -55,7 +55,7 @@ const TaskDestailsPage = () => {
         <div className={styles.actionsBar}>
           <FiEdit
             className={styles.actionIcon}
-            onClick={() => navigate(`/task/edit/${id}`)}
+            onClick={() => navigate(`${PAGES.TASK_EDIT_PAGE}/${id}`)}
           />
           <RiDeleteBin6Line
             className={styles.actionIcon}
@@ -63,7 +63,7 @@ const TaskDestailsPage = () => {
           />
           <FaRegWindowClose
             className={styles.actionIcon}
-            onClick={() => navigate("/")}
+            onClick={() => navigate(PAGES.INITIAL_PAGE)}
           />
         </div>
 

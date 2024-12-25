@@ -27,7 +27,8 @@ import Button from "../../../components/common/Button/Button";
 import TextWithButton from "../components/TextWithButton/TextWithButton";
 import { Formik } from "formik";
 import * as Yup from "yup";
-import { PAGES } from "../../../shared/routes";
+import { AUTH } from "../../../shared/routes";
+import SubmitInput from "../../../components/common/SubmitInput/SubmitInput";
 
 interface FormValues {
   firstName: string;
@@ -62,7 +63,7 @@ const SignupPage = () => {
       redirect: "follow",
     };
 
-    fetch(PAGES.SIGNUP, requestOptions)
+    fetch(AUTH.SIGNUP, requestOptions)
       .then((response) => response.json())
       .then((result) => {
         if (result.status === 400) {
@@ -183,11 +184,7 @@ const SignupPage = () => {
                       : ""
                   }
                 />
-                <Button
-                  title={signupBTN}
-                  type="type-2"
-                  onClick={formik.handleSubmit}
-                />
+                <SubmitInput title={signupBTN} />
                 <TextWithButton
                   text={textWithButton.text}
                   link={textWithButton.link}

@@ -1,0 +1,13 @@
+
+@import "../../../variables.scss";
+
+.submitBTN {
+  border: none;
+  padding-top: 16px;
+  padding-bottom: 16px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 8px;
+  background-color: $theme-color;
+  color: $white-color;
+}

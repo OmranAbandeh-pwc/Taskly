@@ -7,12 +7,15 @@ const {
   updateTaskController,
   deleteTaskController,
 } = require("../../controllers/tasks/tasks");
+
+const { userDetailsController } = require("../../controllers/user/user");
 const {
   ADD_TASK,
   GET_ALL_TASKS,
   GET_TASK,
   UPDATE_TASK,
   DELETE_TASK,
+  GET_USER_DETAILS,
 } = require("../../routes/routes");
 const { verifyToken } = require("../../VerifyToken");
 
@@ -30,5 +33,7 @@ router.put(UPDATE_TASK, updateTaskController);
 
 // Delete a task
 router.delete(DELETE_TASK, deleteTaskController);
+
+router.get(GET_USER_DETAILS, verifyToken, userDetailsController);
 
 module.exports = router;

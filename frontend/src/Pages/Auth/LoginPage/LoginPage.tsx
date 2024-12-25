@@ -13,16 +13,19 @@ import {
   loginBTN,
   textWithImage,
   emptyFieldText,
+  invalidEmailText,
+  minPassText,
 } from "../../../json/static/staticLoginPage";
 import CheckBox from "../../../components/common/CheckBox/CheckBox";
 import { useState } from "react";
 import { useResize } from "../../../hooks/useResize";
 import TitleSection from "../../../components/common/TitleSection/TitleSection";
 import TextWithButton from "../components/TextWithButton/TextWithButton";
-import { PAGES } from "../../../shared/routes";
+import { AUTH } from "../../../shared/routes";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import pic from "../../../resources/images/Logo_square_400x400.png";
+import SubmitInput from "../../../components/common/SubmitInput/SubmitInput";
 
 interface FormValues {
   email: string;
@@ -54,7 +57,7 @@ const LoginPage = () => {
       redirect: "follow",
     };
 
-    fetch(PAGES.SIGNIN, requestOptions)
+    fetch(AUTH.SIGNIN, requestOptions)
       .then((response) => response.json())
       .then((result) => {
         if (result.status === 200) {
@@ -81,10 +84,8 @@ const LoginPage = () => {
 
   // Validation schema (using Yup)
   const validationSchema = Yup.object({
-    email: Yup.string().email("Invalid email").required(emptyFieldText),
-    password: Yup.string()
-      .min(6, "Password must be at least 6 characters")
-      .required(emptyFieldText),
+    email: Yup.string().email(invalidEmailText).required(emptyFieldText),
+    password: Yup.string().min(6, minPassText).required(emptyFieldText),
   });
 
   return (
@@ -133,12 +134,7 @@ const LoginPage = () => {
                     label={checkBoxLabel}
                     onCheckChange={setIsRememberMeChecked}
                   />
-                  <Button
-                    className={styles.loginBTN}
-                    title={loginBTN}
-                    type="type-2"
-                    onClick={formik.handleSubmit}
-                  />
+                  <SubmitInput title={loginBTN} />
                   <TextWithButton
                     text={textWithImage.text}
                     link={textWithImage.link}
