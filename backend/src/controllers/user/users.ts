@@ -25,7 +25,7 @@ export const userDetailsController = async (
     return res.status(200).json({
       status: 200,
       message: "Successfull got user details",
-      tasks: result.recordset,
+      user: result.recordset,
     });
   } catch (error: any) {
     console.error("Error fetching user:", error.message);
