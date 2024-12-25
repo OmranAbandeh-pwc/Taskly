@@ -1,3 +1,5 @@
+@import "../../variables.scss";
+
 .cardsSection {
   padding-inline: 50px;
   padding-top: 10px;
@@ -9,7 +11,7 @@
   overflow-y: auto;
 }
 
-.loaderSection{
+.centered{
   padding-inline: 50px;
   padding-top: 10px;
   padding-bottom: 20px;
@@ -17,6 +19,11 @@
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.noTasksText{
+  font-size: 36px;
+  color: $gray-color;
 }
 
 @media (max-width: 1024px) {

@@ -3,6 +3,7 @@ import styles from "./TaskCard.module.scss";
 import Text from "../../common/Text/Text";
 import { TaskCardProps } from "../TaskCardsSectionTypes";
 import { Link } from "react-router-dom";
+import { PAGES } from "../../../shared/routes";
 
 const TaskCard: React.FC<TaskCardProps> = ({
   id,
@@ -13,7 +14,7 @@ const TaskCard: React.FC<TaskCardProps> = ({
   
 }) => {
   return (
-    <Link className={styles.cardLink} to={`/task/details/${id}`}>
+    <Link className={styles.cardLink} to={`${PAGES.TASK_DETAILS_PAGE}/${id}`}>
     <div className={styles.card}>
       <Text styles={styles.date} text={"date"} />
       <div className={styles.dottedTitle}>

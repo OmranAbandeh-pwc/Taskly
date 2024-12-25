@@ -1,3 +1,5 @@
+import { PAGES } from "../../shared/routes";
+
 const signupHeaderTitle = "Welcome to Signup Page";
 const signupHeaderSubTitle =
   "Belajar gratis di Namanyajugabelajar.io, dan memulai karir yang kamu cita-citata sejak dalam embrio!";
@@ -16,7 +18,7 @@ const userConfirmPasswordPlaceholder = "*********";
 const signupBTN = "Signup";
 const textWithButton = {
   text: "if you already have an account please",
-  link: { text: "Login", url: "/" },
+  link: { text: "Login", url: PAGES.INITIAL_PAGE },
 };
 const emptyFieldText = "Please don't leave this field empty";
 const invalidEmail = "Invalid email";

@@ -1,30 +1,34 @@
+import Text from "../common/Text/Text";
 import Loader from "../Loader/Loader";
 import TaskCard from "./TaskCard/TaskCard";
 import styles from "./TaskCardsSection.module.scss";
 import { TaskCardsSectionProps } from "./TaskCardsSectionTypes";
+import { noTasksText } from "../../json/static/staticGeneral";
 
 const TaskCardsSection: React.FC<TaskCardsSectionProps> = ({
   cards,
   isLoading,
 }) => {
-  return (
-    <div
-      className={`${isLoading ? styles.loaderSection : styles.cardsSection}`}
-    >
-      {isLoading || cards.length === 0 ? (
-        <Loader />
-      ) : (
-        cards.map((card, index) => (
-          <TaskCard
-            key={index}
-            id={card.id}
-            date={card.date}
-            title={card.title}
-            subTitle={card.subTitle}
-            importance={card.importance}
-          />
-        ))
-      )}
+  return isLoading ? (
+    <div className={styles.centered}>
+      <Loader />
+    </div>
+  ) : cards.length === 0 ? (
+    <div className={styles.centered}>
+      <Text styles={styles.noTasksText} text={noTasksText} />
+    </div>
+  ) : (
+    <div className={`${styles.cardsSection}`}>
+      {cards.map((card, index) => (
+        <TaskCard
+          key={index}
+          id={card.id}
+          date={card.date}
+          title={card.title}
+          subTitle={card.subTitle}
+          importance={card.importance}
+        />
+      ))}
     </div>
   );
 };

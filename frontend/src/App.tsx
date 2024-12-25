@@ -8,25 +8,31 @@ import SignupPage from "./Pages/Auth/SignupPage/SignupPage";
 import CreateTaskPage from "./Pages/CreateTaskPage/CreateTaskPage";
 import { userToken } from "./shared/variables";
 import TaskEditPage from "./Pages/TaskEditPage/TaskEditPage";
+import { PAGES } from "./shared/routes";
 
 function App() {
-
   return (
     <>
       {userToken ? (
         <>
           <Header />
           <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/task/details/:id" element={<TaskDestailsPage />} />
-            <Route path="/task/create" element={<CreateTaskPage />} />
-            <Route path="/task/edit/:id" element={<TaskEditPage />} />
+            <Route path={PAGES.INITIAL_PAGE} element={<Home />} />
+            <Route
+              path={`${PAGES.TASK_DETAILS_PAGE}/:id`}
+              element={<TaskDestailsPage />}
+            />
+            <Route path={PAGES.CREATE_TASK_PAGE} element={<CreateTaskPage />} />
+            <Route
+              path={`${PAGES.TASK_EDIT_PAGE}/:id`}
+              element={<TaskEditPage />}
+            />
           </Routes>
         </>
       ) : (
         <Routes>
-          <Route path="/" element={<LoginPage />} />
-          <Route path="/SignupPage" element={<SignupPage />} />
+          <Route path={PAGES.INITIAL_PAGE} element={<LoginPage />} />
+          <Route path={PAGES.SIGNUP_PAGE} element={<SignupPage />} />
         </Routes>
       )}
     </>

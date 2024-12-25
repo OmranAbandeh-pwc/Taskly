@@ -18,7 +18,7 @@ import {
 } from "../../json/static/staticCreateTaskPage";
 import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { API } from "../../shared/routes";
+import { API, PAGES } from "../../shared/routes";
 
 interface FormValues {
   title: string;
@@ -74,7 +74,7 @@ const TaskEditPage = () => {
       .then((response) => response.json())
       .then((result) => {
         if (result.status === 200) {
-          navigate(`/task/details/${id}`);
+          navigate(`${PAGES.TASK_DETAILS_PAGE}/${id}`);
         }
       })
       .catch((error) => console.error(error));
@@ -110,7 +110,7 @@ const TaskEditPage = () => {
               <div className={styles.actionsBar}>
                 <FaRegWindowClose
                   className={styles.actionIcon}
-                  onClick={() => navigate(`/task/details/${id}`)}
+                  onClick={() => navigate(`${PAGES.TASK_DETAILS_PAGE}/${id}`)}
                 />
               </div>
 

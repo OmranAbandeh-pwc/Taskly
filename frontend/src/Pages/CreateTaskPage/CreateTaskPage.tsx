@@ -15,7 +15,7 @@ import {
   taskLevels,
 } from "../../json/static/staticCreateTaskPage";
 import { userToken } from "../../shared/variables";
-import { API } from "../../shared/routes";
+import { API, PAGES } from "../../shared/routes";
 import Dropdown from "../../components/common/Dropdown/Dropdown";
 import { Formik } from "formik";
 import * as Yup from "yup";
@@ -54,7 +54,7 @@ const CreateTaskPage = () => {
       .then((response) => response.json())
       .then((result) => {
         if(result.status === 200){
-          navigate("/")
+          navigate(PAGES.INITIAL_PAGE)
         }
       })
       .catch((error) => console.error(error));
@@ -89,7 +89,7 @@ const CreateTaskPage = () => {
               <div className={styles.actionsBar}>
                 <FaRegWindowClose
                   className={styles.actionIcon}
-                  onClick={() => navigate("/")}
+                  onClick={() => navigate(PAGES.INITIAL_PAGE)}
                 />
               </div>
 
