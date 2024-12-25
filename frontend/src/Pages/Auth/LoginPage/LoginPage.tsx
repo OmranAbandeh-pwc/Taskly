@@ -1,4 +1,3 @@
-import Button from "../../../components/common/Button/Button";
 import Picture from "../../../components/common/Picture/Picture";
 import TextInput from "../../../components/common/TextInput/TextInput";
 import styles from "./LoginPage.module.scss";
