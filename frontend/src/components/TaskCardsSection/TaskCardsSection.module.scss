@@ -11,7 +11,7 @@
   overflow-y: auto;
 }
 
-.centered{
+.centered {
   padding-inline: 50px;
   padding-top: 10px;
   padding-bottom: 20px;
@@ -21,9 +21,9 @@
   justify-content: center;
 }
 
-.noTasksText{
+.noTasksText {
   font-size: 36px;
-  color: $gray-color;
+  color: $gray-color-2;
 }
 
 @media (max-width: 1024px) {

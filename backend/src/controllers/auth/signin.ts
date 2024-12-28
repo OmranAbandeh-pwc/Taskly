@@ -43,7 +43,6 @@ export const signinController = async (
         secondName: user.secondName,
       },
       jsonTokenSecretKey,
-      { expiresIn: "1h" }
     );
 
     // Successful signin

@@ -35,6 +35,14 @@
   background: var(--color-white);
   margin-top: 8px;
 }
+@media (max-width: 768px) {
+  .calendar {
+    max-width: 100%;
+  }
+  .input-container .input {
+    font-size: 12px;
+  }
+}
 
 .calendar.expand-top {
   top: unset;

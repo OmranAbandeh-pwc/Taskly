@@ -7,6 +7,7 @@ import { FaRegWindowClose } from "react-icons/fa";
 import { API, PAGES } from "../../shared/routes";
 import { useEffect, useState } from "react";
 import { TaskCardProps } from "../../components/TaskCardsSection/TaskCardsSectionTypes";
+import { getImportanceColor } from "../../functions/filterColors";
 
 const TaskDestailsPage = () => {
   const navigate = useNavigate();
@@ -70,7 +71,7 @@ const TaskDestailsPage = () => {
         <div className={styles.dottedTitle}>
           <span
             className={styles.dot}
-            style={{ backgroundColor: "red" }}
+            style={{ backgroundColor: getImportanceColor(card.importance) }}
           ></span>
 
           <Text styles={styles.cardTitle} text={card.title} />

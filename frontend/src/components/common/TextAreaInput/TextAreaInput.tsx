@@ -21,7 +21,7 @@ const TextAreaInput: React.FC<TextAreaInputProps> = ({
 }) => {
   return (
     <div className={`${styles.inputContainer} ${className}`}>
-      <label>{label}</label>
+      <label className={styles.inputLabel}>{label}</label>
       <textarea
         className={styles.input}
         placeholder={placeholder}

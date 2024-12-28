@@ -21,7 +21,7 @@ const TextInput: React.FC<TextInputProps> = ({
 }) => {
   return (
     <div className={`${styles.inputContainer} ${className}`}>
-      <label>{label}</label>
+      <label className={styles.inputLabel}>{label}</label>
       <input
         className={styles.input}
         type={type}

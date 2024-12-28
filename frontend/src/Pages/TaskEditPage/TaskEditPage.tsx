@@ -1,9 +1,11 @@
-import styles from "../CreateTaskPage/CreateTaskPage.module.scss";
+import styles from "../styles/TaskFormStyles.module.scss";
+import pageStyles from "../TaskEditPage/TaskEditPage.module.scss";
 import Dropdown from "../../components/common/Dropdown/Dropdown";
 import Button from "../../components/common/Button/Button";
 import TextAreaInput from "../../components/common/TextAreaInput/TextAreaInput";
 import TextInput from "../../components/common/TextInput/TextInput";
 import { FaRegWindowClose } from "react-icons/fa";
+import { IoMdArrowBack } from "react-icons/io";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import {
@@ -15,12 +17,14 @@ import {
   emptyFieldText,
   dropdownPlaceholder,
   taskLevels,
+  dateSelectorPlaceholder,
 } from "../../json/static/staticCreateTaskPage";
 import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { API, PAGES } from "../../shared/routes";
 import DateSelector from "../../components/DateSelector/DateSelector";
 import { formatDateTypeTwo } from "../../functions/date";
+import { getLanguage } from "../../hooks/getLanguage";
 
 interface FormValues {
   title: string;
@@ -33,6 +37,7 @@ interface FormValues {
 const TaskEditPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const lang = getLanguage();
   const [card, setCard] = useState<FormValues>();
 
   const fetchDetails = () => {
@@ -122,10 +127,18 @@ const TaskEditPage = () => {
           <form onSubmit={formik.handleSubmit}>
             <div className={styles.mainContainer}>
               <div className={styles.innerContainer}>
-                <div className={styles.actionsBar}>
+                <div
+                  className={`${styles.actionsBar} ${pageStyles.spaceBetween}`}
+                >
+                  <IoMdArrowBack
+                    className={`${pageStyles.backIcon}`}
+                    onClick={() => {
+                      window.history.back();
+                    }}
+                  />
                   <FaRegWindowClose
-                    className={styles.actionIcon}
-                    onClick={() => navigate(`${PAGES.TASK_DETAILS_PAGE}/${id}`)}
+                    className={`${styles.actionIcon}`}
+                    onClick={() => navigate(`${PAGES.INITIAL_PAGE}`)}
                   />
                 </div>
 
@@ -166,14 +179,14 @@ const TaskEditPage = () => {
                     }
                   />
                   <DateSelector
-                    placeholder="Select"
+                    placeholder={dateSelectorPlaceholder}
                     inputContainerClass={styles.inputs}
                     value={[
                       formatDateTypeTwo(
                         new Date(formik.values.startDate),
-                        "en"
+                        lang
                       ),
-                      formatDateTypeTwo(new Date(formik.values.endDate), "en"),
+                      formatDateTypeTwo(new Date(formik.values.endDate), lang),
                     ]}
                     onChange={handleDateChange}
                   />

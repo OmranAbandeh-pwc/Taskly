@@ -4,6 +4,7 @@ import "react-calendar/dist/Calendar.css";
 import "./DateSelector.css";
 import styles from "../common/styles/InputStyles.module.scss";
 import { formatDateTypeTwo } from "../../functions/date";
+import { getLanguage } from "../../hooks/getLanguage";
 
 interface DateSelectorProps {
   label?: string;
@@ -22,6 +23,7 @@ const DateSelector: React.FC<DateSelectorProps> = ({
 }) => {
   const [showCalendar, setShowCalendar] = useState(false);
   const today = new Date();
+  const lang = getLanguage();
 
   const handleDateChange = (newDate: any) => {
     setShowCalendar(false);
@@ -35,12 +37,12 @@ const DateSelector: React.FC<DateSelectorProps> = ({
         return;
       }
 
-      const formattedStart = formatDateTypeTwo(start, "en");
-      const formattedEnd = formatDateTypeTwo(end, "en");
+      const formattedStart = formatDateTypeTwo(start, lang);
+      const formattedEnd = formatDateTypeTwo(end, lang);
       onChange?.([formattedStart, formattedEnd]); // Pass formatted date range
     } else {
       // Single date selected
-      const formattedDate = formatDateTypeTwo(newDate as Date, "en");
+      const formattedDate = formatDateTypeTwo(newDate as Date, lang);
       onChange?.(formattedDate); // Pass formatted date string
     }
   };
@@ -59,7 +61,7 @@ const DateSelector: React.FC<DateSelectorProps> = ({
       const [start, end] = value;
       return `${start} - ${end}`;
     }
-    return value ? formatDateTypeTwo(new Date(value), "en") : placeholder;
+    return value ? formatDateTypeTwo(new Date(value), lang) : placeholder;
   };
 
   return (
@@ -73,7 +75,7 @@ const DateSelector: React.FC<DateSelectorProps> = ({
       {showCalendar && (
         <div className="calendar">
           <Calendar
-            locale={"en"}
+            locale={lang}
             value={
               Array.isArray(value)
                 ? [parseDate(value[0]), parseDate(value[1])]
