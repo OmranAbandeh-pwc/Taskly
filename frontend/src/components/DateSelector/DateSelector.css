@@ -1,0 +1,275 @@
+@import "../../variables.scss";
+
+:root {
+  --color-white: #ffffff;
+  --color-pale-grey: #999999;
+  --calendar-width: 100%;
+  --calendar-box-shadow: 0 1.5rem 3rem rgba(0, 0, 0, 0.2);
+  --color-shiraz: #b91036;
+  --color-dark-charcoal: #333;
+  --color-text-primary: #000;
+  --color-mercury: #e6e6e6;
+  --color-gray: gray;
+  --color-input-focus: #3dc2c2;
+  --errorColor: var(--color-shiraz);
+  --placeholderColor: var(--color-pale-grey);
+  --color-black-transparent: rgba(0, 0, 0, 0.5);
+  --theme-color-primary: #646ec8;
+  --calendar-width: 400px;
+}
+
+.input-container {
+  position: relative;
+}
+.input-container .input {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  cursor: pointer;
+}
+.calendar {
+  position: absolute;
+  top: 100%; /* Position below the input */
+  left: 0;
+  max-width: var(--calendar-width);
+  z-index: 1000; /* Ensure it's on top of other elements */
+  background: var(--color-white);
+  margin-top: 8px;
+}
+
+.calendar.expand-top {
+  top: unset;
+  bottom: 4rem;
+}
+
+.calendar .react-calendar {
+  margin-top: 4px;
+  /* position: absolute; */
+  padding-inline: 1.2rem;
+  padding-block: 1rem;
+  font-weight: 500;
+  width: var(--calendar-width);
+  box-shadow: var(--calendar-box-shadow);
+  z-index: 200;
+  border-radius: 10px;
+}
+
+.calendar .react-calendar button:focus {
+  outline: none;
+}
+
+.calendar
+  .react-calendar
+  .react-calendar__month-view__days__day--neighboringMonth {
+  visibility: hidden;
+}
+
+.calendar .react-calendar .react-calendar__tile abbr {
+  /* width: 2rem; */
+  /* height: 2rem; */
+  line-height: 1.9;
+  border-radius: 50%;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  width: 100%;
+  aspect-ratio: 1;
+}
+
+.calendar .react-calendar .react-calendar__tile:hover:disabled abbr {
+  background-color: transparent;
+  color: black;
+}
+
+.calendar .react-calendar .react-calendar__tile {
+  padding: 0px 6px;
+  overflow: visible !important;
+}
+
+.calendar .react-calendar {
+  max-width: 100%;
+  background-color: var(--color-white);
+  color: black;
+  border: none;
+  font-family: var(--font-body);
+  line-height: 1.125em;
+}
+
+.react-calendar__navigation {
+  display: flex;
+  padding-block-end: 0.5rem;
+}
+
+.calendar .react-calendar__navigation button {
+  outline: none;
+  background-color: transparent;
+  min-width: 2.75rem;
+  font-size: 1rem;
+  margin-top: 0.5rem;
+}
+
+.calendar .react-calendar__navigation__prev-button[disabled] {
+  color: var(--color-gray);
+}
+
+.calendar .react-calendar__navigation button:enabled:hover,
+.calendar .react-calendar__navigation button:enabled:focus {
+  background-color: transparent;
+}
+
+.calendar .react-calendar__navigation__prev2-button,
+.calendar .react-calendar__navigation__next2-button {
+  display: none;
+}
+
+.calendar .react-calendar__navigation button[disabled] {
+  background-color: var(--color-white);
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.calendar abbr[title] {
+  text-decoration: none;
+}
+
+.calendar .react-calendar__tile:disabled {
+  background-color: transparent;
+  cursor: not-allowed;
+}
+
+.calendar .react-calendar__tile:disabled abbr {
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.react-calendar__month-view__weekdays__weekday {
+  text-align: center;
+}
+
+.calendar .react-calendar__tile--weekend,
+.calendar .react-calendar__tile--active.react-calendar__tile--weekend > * {
+  color: var(--color-white);
+}
+
+.calendar .react-calendar__month-view__days__day:disabled {
+  background-color: transparent;
+  opacity: 0.5;
+}
+
+.calendar .react-calendar__month-view__days__day--weekend abbr {
+  color: black;
+}
+
+.calendar
+  .react-calendar__month-view__days__day--weekend.react-calendar__tile--active
+  abbr {
+  color: var(--color-white);
+}
+
+.calendar .react-calendar__tile:enabled:hover,
+.calendar .react-calendar__tile:enabled:focus {
+  background-color: transparent;
+}
+
+.calendar .react-calendar__tile--range.react-calendar__tile:enabled:hover,
+.calendar .react-calendar__tile--range.react-calendar__tile:enabled:focus {
+  background-color: var(--color-gray);
+}
+
+.calendar .react-calendar__tile--now {
+  background: transparent;
+}
+
+.calendar .react-calendar__tile--active {
+  background: var(--theme-color-primary);
+  color: var(--color-white);
+}
+
+.calendar .react-calendar__tile--active:enabled:focus {
+  outline: none;
+}
+
+.calendar .react-calendar__tile--active {
+  background-color: var(--color-gray);
+  /* color: var(--color-black-transparent); */
+}
+
+.calendar .react-calendar--selectRange,
+.calendar .react-calendar__tile--hover {
+  background-color: transparent !important;
+}
+
+.calendar
+  .react-calendar__tile.react-calendar__tile--active.react-calendar__tile--range.react-calendar__tile--rangeStart.react-calendar__tile--rangeEnd.react-calendar__tile--rangeBothEnds,
+.calendar
+  .react-calendar__tile.react-calendar__tile--hasActive.react-calendar__tile--range.react-calendar__tile--rangeStart.react-calendar__tile--rangeEnd.react-calendar__tile--rangeBothEnds {
+  background: transparent !important;
+  abbr {
+    /* Mimic Tailwind behavior to keep styling consistent */
+    background: var(--theme-color-primary);
+  }
+}
+
+/* Caret icon */
+.fa-caret-down,
+.fa-caret-up {
+  margin-left: 5px;
+}
+
+/* Styles for tiles in a range */
+.react-calendar__tile--range {
+  background-color: var(
+    --theme-color-primary
+  ) !important; /* Light blue background for range tiles */
+  color: white !important; /* Black text */
+}
+
+/* Styles for the start of the range */
+.react-calendar__tile--rangeStart {
+  background-color: var(
+    --theme-color-primary
+  ) !important; /* Blue background for range start */
+  color: white; /* White text */
+  border-end-start-radius: 50%;
+  border-start-start-radius: 50%;
+}
+
+/* Styles for the end of the range */
+.react-calendar__tile--rangeEnd {
+  background-color: var(
+    --theme-color-primary
+  ) !important; /* Darker blue background for range end */
+  color: var(--color-white) !important; /* White text */
+  border-end-end-radius: 50%;
+  border-start-end-radius: 50%;
+}
+.react-calendar__tile--rangeEnd abbr {
+  color: var(--color-white) !important; /* White text */
+}
+
+/* Additional styling for day tiles */
+.react-calendar__month-view__days__day {
+  padding: 0.5em; /* Adjust padding for better spacing */
+  font-weight: bold; /* Make day numbers bold */
+  border: 1px solid transparent; /* Optional: add border for hover effect */
+}
+
+/* Ensure weekends inside a range have proper styling */
+.react-calendar__tile--weekend.react-calendar__tile--rangeEnd,
+.react-calendar__tile--weekend.react-calendar__tile--rangeStart {
+  /* Override black color for weekends */
+  abbr {
+    /* Mimic Tailwind behavior to keep styling consistent */
+    background: var(--theme-color-primary);
+    color: white !important;
+  }
+}
+/* Styling for active weekends */
+.calendar
+  .react-calendar__month-view__days__day--weekend.react-calendar__tile--active
+  abbr {
+  color: var(
+    --color-white
+  ) !important; /* Ensure active weekends have white text */
+}

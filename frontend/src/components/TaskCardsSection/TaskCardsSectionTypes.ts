@@ -1,6 +1,7 @@
 export interface TaskCardProps {
   id: number;
-  date?: string;
+  startDate: string;
+  endDate:string;
   title: string;
   subTitle: string;
   importance: string;
