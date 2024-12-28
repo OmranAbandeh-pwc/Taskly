@@ -19,11 +19,15 @@ import {
 import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { API, PAGES } from "../../shared/routes";
+import DateSelector from "../../components/DateSelector/DateSelector";
+import { formatDateTypeTwo } from "../../functions/date";
 
 interface FormValues {
   title: string;
   subTitle: string;
   importance: string;
+  startDate: any;
+  endDate: any;
 }
 
 const TaskEditPage = () => {
@@ -42,7 +46,6 @@ const TaskEditPage = () => {
       .then((result) => {
         if (result.status === 200) {
           setCard(result.task);
-          console.log(result);
         }
       })
       .catch((error) => console.error(error));
@@ -53,7 +56,6 @@ const TaskEditPage = () => {
   }, []);
 
   const handleEditTask = (values: FormValues) => {
-    console.log("values : ", values);
     const myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
 
@@ -61,6 +63,8 @@ const TaskEditPage = () => {
       title: values.title,
       subTitle: values.subTitle,
       importance: values.importance,
+      startDate: values.startDate,
+      endDate: values.endDate,
     });
 
     const requestOptions: any = {
@@ -85,6 +89,8 @@ const TaskEditPage = () => {
     title: card ? card.title : "",
     subTitle: card ? card.subTitle : "",
     importance: card ? card.importance : "",
+    startDate: card ? card.startDate : "",
+    endDate: card ? card.endDate : "",
   };
 
   // Validation schema (using Yup)
@@ -103,62 +109,86 @@ const TaskEditPage = () => {
         handleEditTask(values);
       }}
     >
-      {(formik) => (
-        <form onSubmit={formik.handleSubmit}>
-          <div className={styles.mainContainer}>
-            <div className={styles.innerContainer}>
-              <div className={styles.actionsBar}>
-                <FaRegWindowClose
-                  className={styles.actionIcon}
-                  onClick={() => navigate(`${PAGES.TASK_DETAILS_PAGE}/${id}`)}
-                />
-              </div>
+      {(formik) => {
+        const handleDateChange = (dates: any) => {
+          // Convert the string to a Date object
+          const startDate = new Date(dates[0]);
+          const endDate = new Date(dates[1]);
 
-              <div className={styles.fieldsContainer}>
-                <TextInput
-                  label={titleInputLabel}
-                  placeholder={titleInputPlaceholder}
-                  type={"text"}
-                  className={styles.inputs}
-                  value={formik.values.title}
-                  onValueChange={formik.handleChange("title")}
-                  errorMessage={
-                    formik.touched.title ? (formik.errors.title as string) : ""
-                  }
-                />
-                <TextAreaInput
-                  label={descriptionInputLabel}
-                  placeholder={descriptionInputPlaceholder}
-                  className={styles.inputs}
-                  value={formik.values.subTitle}
-                  onValueChange={formik.handleChange("subTitle")}
-                  errorMessage={
-                    formik.touched.subTitle
-                      ? (formik.errors.subTitle as string)
-                      : ""
-                  }
-                />
-                <Dropdown
-                  options={taskLevels}
-                  placeholder={dropdownPlaceholder}
-                  className={styles.inputs}
-                  value={formik.values.importance}
-                  onValueChange={formik.handleChange("importance")}
-                  errorMessage={
-                    formik.touched.importance ? formik.errors.importance : ""
-                  }
-                />
-                <Button
-                  title={editButtonText}
-                  type="type-1"
-                  className={styles.inputs}
-                  onClick={formik.handleSubmit}
-                />
+          formik.setFieldValue("startDate", startDate.toISOString());
+          formik.setFieldValue("endDate", endDate.toISOString());
+        };
+        return (
+          <form onSubmit={formik.handleSubmit}>
+            <div className={styles.mainContainer}>
+              <div className={styles.innerContainer}>
+                <div className={styles.actionsBar}>
+                  <FaRegWindowClose
+                    className={styles.actionIcon}
+                    onClick={() => navigate(`${PAGES.TASK_DETAILS_PAGE}/${id}`)}
+                  />
+                </div>
+
+                <div className={styles.fieldsContainer}>
+                  <TextInput
+                    label={titleInputLabel}
+                    placeholder={titleInputPlaceholder}
+                    type={"text"}
+                    className={styles.inputs}
+                    value={formik.values.title}
+                    onValueChange={formik.handleChange("title")}
+                    errorMessage={
+                      formik.touched.title
+                        ? (formik.errors.title as string)
+                        : ""
+                    }
+                  />
+                  <TextAreaInput
+                    label={descriptionInputLabel}
+                    placeholder={descriptionInputPlaceholder}
+                    className={styles.inputs}
+                    value={formik.values.subTitle}
+                    onValueChange={formik.handleChange("subTitle")}
+                    errorMessage={
+                      formik.touched.subTitle
+                        ? (formik.errors.subTitle as string)
+                        : ""
+                    }
+                  />
+                  <Dropdown
+                    options={taskLevels}
+                    placeholder={dropdownPlaceholder}
+                    className={styles.inputs}
+                    value={formik.values.importance}
+                    onValueChange={formik.handleChange("importance")}
+                    errorMessage={
+                      formik.touched.importance ? formik.errors.importance : ""
+                    }
+                  />
+                  <DateSelector
+                    placeholder="Select"
+                    inputContainerClass={styles.inputs}
+                    value={[
+                      formatDateTypeTwo(
+                        new Date(formik.values.startDate),
+                        "en"
+                      ),
+                      formatDateTypeTwo(new Date(formik.values.endDate), "en"),
+                    ]}
+                    onChange={handleDateChange}
+                  />
+                  <Button
+                    title={editButtonText}
+                    type="type-1"
+                    className={styles.inputs}
+                    onClick={formik.handleSubmit}
+                  />
+                </div>
               </div>
             </div>
-          </div>
-        </form>
-      )}
+          </form>
+        );
+      }}
     </Formik>
   );
 };

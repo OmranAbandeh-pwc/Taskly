@@ -23,7 +23,8 @@ const TaskCardsSection: React.FC<TaskCardsSectionProps> = ({
         <TaskCard
           key={index}
           id={card.id}
-          date={card.date}
+          startDate={card.startDate ? card.startDate : ""}
+          endDate={card.endDate ? card.endDate : ""}
           title={card.title}
           subTitle={card.subTitle}
           importance={card.importance}

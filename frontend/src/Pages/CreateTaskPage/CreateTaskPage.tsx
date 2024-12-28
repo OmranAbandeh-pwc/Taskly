@@ -19,20 +19,33 @@ import { API, PAGES } from "../../shared/routes";
 import Dropdown from "../../components/common/Dropdown/Dropdown";
 import { Formik } from "formik";
 import * as Yup from "yup";
+import DateSelector from "../../components/DateSelector/DateSelector";
+import { useState } from "react";
+import { formatDate } from "../../functions/date";
 
 interface FormValues {
   title: string;
   subTitle: string;
   level: string;
+  startDate: string;
+  endDate: string;
 }
 
 // TODO add date filed to the task
 // TODO add drop down to choose level of the task
 const CreateTaskPage = () => {
   const navigate = useNavigate();
+  const [selectedValue, setSelectedValue] = useState<string | [string, string]>(
+    ""
+  );
+  const formattedStartDate = formatDate(selectedValue[0]);
+  const formattedEndDate = formatDate(selectedValue[1]);
+
+  const handleDateChange = (value: string | [string, string]) => {
+    setSelectedValue(value);
+  };
 
   const handleCreateTask = (values: FormValues) => {
-
     const myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
     myHeaders.append("Authorization", `Bearer ${userToken}`);
@@ -41,6 +54,8 @@ const CreateTaskPage = () => {
       title: values.title,
       subTitle: values.subTitle,
       importance: values.level,
+      startDate: formattedStartDate,
+      endDate: formattedEndDate,
     });
 
     const requestOptions: any = {
@@ -53,8 +68,8 @@ const CreateTaskPage = () => {
     fetch(API.post.ADD_TASK, requestOptions)
       .then((response) => response.json())
       .then((result) => {
-        if(result.status === 200){
-          navigate(PAGES.INITIAL_PAGE)
+        if (result.status === 200) {
+          navigate(PAGES.INITIAL_PAGE);
         }
       })
       .catch((error) => console.error(error));
@@ -65,6 +80,8 @@ const CreateTaskPage = () => {
     title: "",
     subTitle: "",
     level: "",
+    startDate: "",
+    endDate: "",
   };
 
   // Validation schema (using Yup)
@@ -124,6 +141,12 @@ const CreateTaskPage = () => {
                   value="h"
                   onValueChange={formik.handleChange("level")}
                 />
+                <DateSelector
+                  placeholder="Select"
+                  inputContainerClass={styles.inputs}
+                  value={selectedValue}
+                  onChange={handleDateChange}
+                />
                 <Button
                   title={createButtonText}
                   type="type-1"
@@ -132,7 +155,7 @@ const CreateTaskPage = () => {
                 />
               </div>
             </div>
-          </div>{" "}
+          </div>
         </form>
       )}
     </Formik>

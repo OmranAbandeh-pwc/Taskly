@@ -1,7 +1,7 @@
-import express, { Request, Response } from "express";
+import { Request, Response } from "express";
+import RequestWithUserRole from "../../types/user";
 import { connectToDatabase } from "../../DB/dbConfig";
 import sql from "mssql";
-import RequestWithUserRole from "../../types/user";
 
 // TODO add date to the task
 // Add a new task ----------------------------------------------------------------------
@@ -10,13 +10,30 @@ export const addNewTaskController = async (
   res: Response
 ): Promise<Response> => {
   const userid = req.userid;
-  const { title, subTitle, importance } = req.body;
+  const { title, subTitle, importance, startDate, endDate } = req.body;
 
   try {
+    const start = new Date(startDate);
+    const end = new Date(endDate);
+
+    if (isNaN(start.getTime()) || isNaN(end.getTime())) {
+      return res.status(400).json({
+        status: 400,
+        message: "Invalid date format. Use 'YYYY-MM-DD'.",
+      });
+    }
+
+    if (end < start) {
+      return res.status(400).json({
+        status: 400,
+        message: "endDate cannot be earlier than startDate",
+      });
+    }
+
     const pool = await connectToDatabase();
     const query = `
-        INSERT INTO Tasks (userid, title, subTitle, importance)
-        VALUES (@userid, @title, @subTitle, @importance)
+        INSERT INTO Tasks (userid, title, subTitle, importance, startDate, endDate)
+        VALUES (@userid, @title, @subTitle, @importance, @startDate, @endDate)
       `;
     await pool
       .request()
@@ -24,6 +41,8 @@ export const addNewTaskController = async (
       .input("title", sql.NVarChar, title)
       .input("subTitle", sql.NVarChar, subTitle || null) // Allow null subtitles
       .input("importance", sql.NVarChar, importance)
+      .input("startDate", sql.Date, startDate) // Ensure dates are passed correctly
+      .input("endDate", sql.Date, endDate)
       .query(query);
 
     return res
@@ -51,7 +70,7 @@ export const getAllTasksController = async (
   try {
     const pool = await connectToDatabase();
     const query =
-      "SELECT id, title, subTitle, importance FROM Tasks WHERE userid = @userid";
+      "SELECT id, title, subTitle, importance, startDate, endDate FROM Tasks WHERE userid = @userid";
     const result = await pool
       .request()
       .input("userid", sql.NVarChar, userid)
@@ -86,7 +105,7 @@ export const getTaskController = async (
   try {
     const pool = await connectToDatabase();
     const query =
-      "SELECT title, subTitle, importance FROM Tasks WHERE id = @id";
+      "SELECT title, subTitle, importance, startDate, endDate FROM Tasks WHERE id = @id";
     const result = await pool
       .request()
       .input("id", sql.Int, id) // Ensure 'id' is treated as an integer
@@ -115,21 +134,27 @@ export const updateTaskController = async (
   res: Response
 ): Promise<Response> => {
   const { id } = req.params;
-  const { title, subTitle, importance } = req.body;
+  const { title, subTitle, importance, startDate, endDate } = req.body;
 
   try {
     const pool = await connectToDatabase();
     const query = `
-          UPDATE Tasks
-          SET title = @title, subTitle = @subTitle, importance = @importance
-          WHERE id = @id
-        `;
+      UPDATE Tasks
+      SET title = @title, 
+          subTitle = @subTitle, 
+          importance = @importance, 
+          startDate = @startDate, 
+          endDate = @endDate
+      WHERE id = @id
+    `;
     const result = await pool
       .request()
       .input("id", sql.Int, id)
       .input("title", sql.NVarChar, title)
       .input("subTitle", sql.NVarChar, subTitle || null)
       .input("importance", sql.NVarChar, importance)
+      .input("startDate", sql.DateTime, startDate)  // Ensure startDate is passed as DateTime
+      .input("endDate", sql.DateTime, endDate) 
       .query(query);
 
     if (result.rowsAffected[0] === 0) {

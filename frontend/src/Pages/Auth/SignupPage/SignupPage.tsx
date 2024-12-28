@@ -23,7 +23,6 @@ import {
 } from "../../../json/static/staticSignupPage";
 import DateInput from "../../../components/common/DateInput/DateInput";
 import TitleSection from "../../../components/common/TitleSection/TitleSection";
-import Button from "../../../components/common/Button/Button";
 import TextWithButton from "../components/TextWithButton/TextWithButton";
 import { Formik } from "formik";
 import * as Yup from "yup";
