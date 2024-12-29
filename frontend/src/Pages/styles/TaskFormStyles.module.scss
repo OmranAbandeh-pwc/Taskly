@@ -1,0 +1,57 @@
+@import "../../variables.scss";
+
+.mainContainer {
+  display: grid;
+  grid-template-rows: $header-height auto;
+  align-items: center;
+  justify-content: center;
+  width: 100vw;
+  min-height: 100vh;
+
+  .innerContainer {
+    margin-top: 50px;
+    margin-bottom: 50px;
+    padding: 30px;
+    box-sizing: border-box;
+    grid-row: 2;
+    width: 80vw;
+    min-height: 80vh;
+    box-shadow: 0 0 20px 10px rgb(230, 230, 230);
+
+    .actionsBar {
+      display: flex;
+      justify-content: end;
+      align-items: center;
+      gap: 20px;
+
+      .actionIcon {
+        font-size: 20px;
+        cursor: pointer;
+      }
+    }
+
+    .fieldsContainer {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 40px;
+
+      .inputs {
+        width: 60%;
+      }
+      @media (max-width: 768px) {
+        .inputs {
+          width: 100%;
+        }
+      }
+    }
+  }
+  @media (max-width: 768px) {
+    .innerContainer {
+      min-height: 70vh;
+      width: 90vw;
+    }
+  }
+}

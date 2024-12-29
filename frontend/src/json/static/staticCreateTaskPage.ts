@@ -12,6 +12,7 @@ const taskLevels = [
   { title: "Highest", value: "highest" },
 ];
 const editButtonText = "Edit Task";
+const dateSelectorPlaceholder = "Select Date";
 
 export {
   titleInputLabel,
@@ -23,4 +24,5 @@ export {
   dropdownPlaceholder,
   taskLevels,
   editButtonText,
+  dateSelectorPlaceholder,
 };

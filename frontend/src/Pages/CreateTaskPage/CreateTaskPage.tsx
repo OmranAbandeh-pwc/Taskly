@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import Button from "../../components/common/Button/Button";
 import TextAreaInput from "../../components/common/TextAreaInput/TextAreaInput";
 import TextInput from "../../components/common/TextInput/TextInput";
-import styles from "./CreateTaskPage.module.scss";
+import styles from "../styles/TaskFormStyles.module.scss";
 import { FaRegWindowClose } from "react-icons/fa";
 import {
   titleInputLabel,
@@ -13,6 +13,7 @@ import {
   emptyFieldText,
   dropdownPlaceholder,
   taskLevels,
+  dateSelectorPlaceholder,
 } from "../../json/static/staticCreateTaskPage";
 import { userToken } from "../../shared/variables";
 import { API, PAGES } from "../../shared/routes";
@@ -142,7 +143,7 @@ const CreateTaskPage = () => {
                   onValueChange={formik.handleChange("level")}
                 />
                 <DateSelector
-                  placeholder="Select"
+                  placeholder={dateSelectorPlaceholder}
                   inputContainerClass={styles.inputs}
                   value={selectedValue}
                   onChange={handleDateChange}

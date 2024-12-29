@@ -5,6 +5,8 @@ import { TaskCardProps } from "../TaskCardsSectionTypes";
 import { Link } from "react-router-dom";
 import { PAGES } from "../../../shared/routes";
 import { formatDateTypeTwo } from "../../../functions/date";
+import { getLanguage } from "../../../hooks/getLanguage";
+import { getImportanceColor } from "../../../functions/filterColors";
 
 const TaskCard: React.FC<TaskCardProps> = ({
   id,
@@ -14,25 +16,26 @@ const TaskCard: React.FC<TaskCardProps> = ({
   subTitle,
   importance,
 }) => {
+  const lang = getLanguage();
   return (
     <Link className={styles.cardLink} to={`${PAGES.TASK_DETAILS_PAGE}/${id}`}>
       <div className={styles.card}>
         <div className={styles.dateContainer}>
           <Text
             styles={styles.date}
-            text={formatDateTypeTwo(new Date(startDate), "en")}
+            text={formatDateTypeTwo(new Date(startDate), lang)}
           />
           {"-"}
           <Text
             styles={styles.date}
-            text={formatDateTypeTwo(new Date(endDate), "en")}
+            text={formatDateTypeTwo(new Date(endDate), lang)}
           />
         </div>
 
         <div className={styles.dottedTitle}>
           <span
             className={styles.dot}
-            style={{ backgroundColor: "red" }}
+            style={{ backgroundColor: getImportanceColor(importance) }}
           ></span>
           <Text styles={styles.title} text={title} />
         </div>
