@@ -6,11 +6,17 @@ import { userToken } from "../../shared/variables";
 import { API } from "../../shared/routes";
 import { useEffect, useState } from "react";
 import { TaskCardProps } from "../../components/TaskCardsSection/TaskCardsSectionTypes";
+import { filterButtons } from "../../json/filtersStatic";
+import { noTasksText } from "../../json/static/staticGeneral";
 
 const Home = () => {
   const [cards, setCards] = useState<TaskCardProps[]>();
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [searchQuery, setSearchQuery] = useState<string>("");
+  const [activeButton, setActiveButton] = useState<string>(
+    filterButtons[0].value
+  );
+  const [noTasksFoundText, setNoTasksFoundText] = useState(noTasksText);
 
   const fetchData = async () => {
     setIsLoading(true);
@@ -23,13 +29,16 @@ const Home = () => {
       redirect: "follow",
     };
 
-    await fetch(API.get.GET_CARDS, requestOptions)
+    await fetch(`${API.get.GET_CARDS_FILTER}${activeButton}`, requestOptions)
       .then((response) => response.json())
       .then((result) => {
         if (result.status === 200) {
           setCards(result.tasks);
-          setIsLoading(false);
+        } else {
+          setCards([]);
+          setNoTasksFoundText(result.message);
         }
+        setIsLoading(false);
       })
       .catch((error) => console.error(error));
     setIsLoading(false);
@@ -37,7 +46,7 @@ const Home = () => {
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [activeButton]);
 
   const handleSearch = () => {
     setIsLoading(true);
@@ -59,8 +68,13 @@ const Home = () => {
           if (result.status === 200) {
             setCards([]);
             setCards(result.tasks);
-            setIsLoading(false);
+          } else if (result.status === 404) {
+            setCards([]);
+            setNoTasksFoundText(result.message);
+          } else {
+            setCards([]);
           }
+          setIsLoading(false);
         })
         .catch((error) => console.error(error));
     }
@@ -74,8 +88,18 @@ const Home = () => {
         onChange={setSearchQuery}
         onSearchClick={handleSearch}
       />
-      <ToolsBar className={styles.toolsBar} />
-      {<TaskCardsSection cards={cards ? cards : []} isLoading={isLoading} />}
+      <ToolsBar
+        activeButton={activeButton}
+        setActiveButton={setActiveButton}
+        className={styles.toolsBar}
+      />
+      {
+        <TaskCardsSection
+          cards={cards ? cards : []}
+          isLoading={isLoading}
+          noTasksFoundText={noTasksFoundText}
+        />
+      }
     </div>
   );
 };

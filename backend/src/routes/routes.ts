@@ -19,6 +19,7 @@ export const TASK_API = {
 // Users Route
 export const FILTERS_API = {
   POST_SEARCH_TASKS: "/search",
+  POST_IMPORTANCE_FILTER: "/filter/importance"
 };
 
 // Users Route

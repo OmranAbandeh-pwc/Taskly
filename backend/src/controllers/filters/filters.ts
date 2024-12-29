@@ -1,8 +1,10 @@
-import { Response } from "express";
+import { Response, Request } from "express";
 import { connectToDatabase } from "../../DB/dbConfig";
 import RequestWithUserRole from "../../types/user";
 import sql from "mssql";
 
+
+// Search API
 export const searchController = async (
   req: RequestWithUserRole,
   res: Response
@@ -50,3 +52,4 @@ export const searchController = async (
     });
   }
 };
+

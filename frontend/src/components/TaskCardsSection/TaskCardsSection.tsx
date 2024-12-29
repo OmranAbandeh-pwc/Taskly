@@ -8,6 +8,7 @@ import { noTasksText } from "../../json/static/staticGeneral";
 const TaskCardsSection: React.FC<TaskCardsSectionProps> = ({
   cards,
   isLoading,
+  noTasksFoundText,
 }) => {
   return isLoading ? (
     <div className={styles.centered}>
@@ -15,7 +16,7 @@ const TaskCardsSection: React.FC<TaskCardsSectionProps> = ({
     </div>
   ) : cards.length === 0 ? (
     <div className={styles.centered}>
-      <Text styles={styles.noTasksText} text={noTasksText} />
+      <Text styles={styles.noTasksText} text={noTasksFoundText} />
     </div>
   ) : (
     <div className={`${styles.cardsSection}`}>
