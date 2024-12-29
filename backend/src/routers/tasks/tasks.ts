@@ -2,7 +2,7 @@ import express from "express";
 import { verifyToken } from "../../Functions/VerifyToken";
 import {
   addNewTaskController,
-  getAllTasksController,
+  getTasksFilterController,
   getTaskController,
   updateTaskController,
   deleteTaskController,
@@ -15,7 +15,7 @@ export const router = express.Router();
 router.post(TASK_API.ADD_TASK, verifyToken, addNewTaskController);
 
 // Get All Tasks
-router.get(TASK_API.GET_ALL_TASKS, verifyToken, getAllTasksController);
+router.get(TASK_API.GET_ALL_TASKS, verifyToken, getTasksFilterController);
 
 // Get a task
 router.get(TASK_API.GET_TASK, getTaskController);

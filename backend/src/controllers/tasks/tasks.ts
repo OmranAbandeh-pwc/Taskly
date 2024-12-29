@@ -59,33 +59,57 @@ export const addNewTaskController = async (
 };
 
 // Get all tasks for a specific user ----------------------------------------------------------------------
-export const getAllTasksController = async (
+export const getTasksFilterController = async (
   req: RequestWithUserRole,
   res: Response
 ): Promise<Response> => {
+  const { importance } = req.query; // Extract importance from query parameters
   const userid = req.userid;
 
-  console.log("userid : ", userid);
+  if (!importance) {
+    return res.status(400).json({
+      status: 400,
+      message: "Importance is required as a query parameter.",
+    });
+  }
 
   try {
     const pool = await connectToDatabase();
     const query =
-      "SELECT id, title, subTitle, importance, startDate, endDate FROM Tasks WHERE userid = @userid";
+      importance === "all"
+        ? `
+          SELECT id, title, subTitle, importance, startDate, endDate
+          FROM Tasks
+          WHERE userid = @userid
+        `
+        : `
+          SELECT id, title, subTitle, importance, startDate, endDate
+          FROM Tasks
+          WHERE userid = @userid AND importance = @importance
+        `;
+
     const result = await pool
       .request()
       .input("userid", sql.NVarChar, userid)
+      .input("importance", sql.NVarChar, importance) // Bind importance parameter
       .query(query);
 
+    if (result.recordset.length === 0) {
+      return res.status(404).json({
+        status: 404,
+        message: "No tasks found with " + importance + " Importance",
+      });
+    }
     return res.status(200).json({
       status: 200,
-      message: "Successfull got all tasks",
+      message: "Tasks filtered by importance retrieved successfully",
       tasks: result.recordset,
     });
   } catch (error: any) {
-    console.error("Error fetching tasks:", error.message);
+    console.error("Error filtering tasks by importance:", error.message);
     return res.status(500).json({
       status: 500,
-      message: "Failed to fetch tasks",
+      message: "Failed to filter tasks by importance",
       details: error.message,
     });
   }
@@ -153,8 +177,8 @@ export const updateTaskController = async (
       .input("title", sql.NVarChar, title)
       .input("subTitle", sql.NVarChar, subTitle || null)
       .input("importance", sql.NVarChar, importance)
-      .input("startDate", sql.DateTime, startDate)  // Ensure startDate is passed as DateTime
-      .input("endDate", sql.DateTime, endDate) 
+      .input("startDate", sql.DateTime, startDate) // Ensure startDate is passed as DateTime
+      .input("endDate", sql.DateTime, endDate)
       .query(query);
 
     if (result.rowsAffected[0] === 0) {

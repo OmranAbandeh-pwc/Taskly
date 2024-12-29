@@ -15,7 +15,7 @@ export const AUTH = {
 
 export const API = {
   get: {
-    GET_CARDS: `${WINDOW_PATH}/api/v1/tasks`,
+    GET_CARDS_FILTER: `${WINDOW_PATH}/api/v1/tasks?importance=`,
     CARD_DETAILS: `${WINDOW_PATH}/api/v1/get/task`,
     GET_USERS_DETAILS: `${WINDOW_PATH}/api/v1/user`,
   },

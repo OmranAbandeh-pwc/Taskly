@@ -1,10 +1,7 @@
-
-
-
 export const filterButtons = [
-    { title: "All" },
-    { title: "Product" },
-    { title: "Service" },
-    { title: "Projects" },
-    { title: "Sections" },
-  ]; 
+  { title: "All", value: "all" },
+  { title: "Highest", value: "highest" },
+  { title: "High", value: "high" },
+  { title: "Medum", value: "medum" },
+  { title: "Low", value: "low" },
+];

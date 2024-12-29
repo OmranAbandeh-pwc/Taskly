@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import styles from "./ToolsBar.module.scss";
 import FilterButton from "./components/FilterButton/FilterButton";
 import { filterButtons } from "../../json/filtersStatic";
@@ -10,16 +10,21 @@ import { useNavigate } from "react-router-dom";
 import { addTaskText } from "../../json/static/staticGeneral";
 import { PAGES } from "../../shared/routes";
 interface ToolsBarProps {
+  activeButton: string | undefined;
+  setActiveButton: (value: string) => void;
   className?: string;
 }
 
-const ToolsBar: React.FC<ToolsBarProps> = ({ className }) => {
+const ToolsBar: React.FC<ToolsBarProps> = ({
+  activeButton,
+  setActiveButton,
+  className,
+}) => {
   const navigate = useNavigate();
-  const [activeButton, setActiveButton] = useState(filterButtons[0].title); // Initial active button
-  const { isMobile } = useResize();
+ const { isMobile } = useResize();
 
-  const handleButtonClick = (title: string) => {
-    setActiveButton(title);
+  const handleButtonClick = (value: string) => {
+    setActiveButton(value);
   };
 
   return (
@@ -29,8 +34,8 @@ const ToolsBar: React.FC<ToolsBarProps> = ({ className }) => {
           <FilterButton
             key={index}
             title={button.title}
-            isActive={activeButton === button.title}
-            handleClick={() => handleButtonClick(button.title)}
+            isActive={activeButton === button.value}
+            handleClick={() => handleButtonClick(button.value)}
           />
         ))}
       </div>
