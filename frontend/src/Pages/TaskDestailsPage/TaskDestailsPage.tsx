@@ -8,11 +8,14 @@ import { API, PAGES } from "../../shared/routes";
 import { useEffect, useState } from "react";
 import { TaskCardProps } from "../../components/TaskCardsSection/TaskCardsSectionTypes";
 import { getImportanceColor } from "../../functions/filterColors";
+import { formatDateTypeTwo } from "../../functions/date";
+import { getLanguage } from "../../hooks/getLanguage";
 
 const TaskDestailsPage = () => {
   const navigate = useNavigate();
   const { id } = useParams();
   const [card, setCard] = useState<TaskCardProps>();
+  const lang = getLanguage();
 
   const fetchDetails = () => {
     const requestOptions: any = {
@@ -65,6 +68,18 @@ const TaskDestailsPage = () => {
           <FaRegWindowClose
             className={styles.actionIcon}
             onClick={() => navigate(PAGES.INITIAL_PAGE)}
+          />
+        </div>
+
+        <div className={styles.dateContainer}>
+          <Text
+            styles={styles.date}
+            text={formatDateTypeTwo(new Date(card.startDate), lang)}
+          />
+          {"-"}
+          <Text
+            styles={styles.date}
+            text={formatDateTypeTwo(new Date(card.endDate), lang)}
           />
         </div>
 
