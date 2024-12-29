@@ -4,6 +4,7 @@ import { connectToDatabase } from "./DB/dbConfig";
 import cors from "cors";
 import { router as authRouter } from "./routers/auth/auth";
 import { router as tasksRouter } from "./routers/tasks/tasks";
+import { router as filtersRouter } from "./routers/filters/filters";
 import { router as usersRouter } from "./routers/user/users";
 import { MAIN_PATH } from "./routes/routes";
 
@@ -28,6 +29,7 @@ app.use((req: Request, res: Response, next: NextFunction) => {
 
 app.use(MAIN_PATH, authRouter);
 app.use(MAIN_PATH, tasksRouter);
+app.use(MAIN_PATH, filtersRouter);
 app.use(MAIN_PATH, usersRouter);
 
 connectToDatabase()

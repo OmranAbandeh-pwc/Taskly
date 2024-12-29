@@ -17,6 +17,11 @@ export const TASK_API = {
 };
 
 // Users Route
+export const FILTERS_API = {
+  POST_SEARCH_TASKS: "/search",
+};
+
+// Users Route
 export const USERS_API = {
   GET_USER_DETAILS: "/user",
 };
