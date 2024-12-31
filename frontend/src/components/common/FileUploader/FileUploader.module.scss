@@ -1,0 +1,41 @@
+@import "../../../variables.scss";
+
+.fileInputContainer {
+    display: flex;
+    justify-content: center;
+    align-items: start;
+    flex-direction: column;
+    position: relative;
+    box-sizing: border-box;
+    width: 60%;
+  }
+  
+  .fileInputLabelAbove {
+    font-size: 16px;
+    margin-bottom: 8px; /* Space between label and input */
+    color: #333;
+  }
+  
+  .fileInputWrapper {
+    cursor: pointer;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    border-radius: 4px;
+    padding-inline: 15px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    background-color: $gray-color-6;
+    width: 100%; /* Make the wrapper span the container */
+    text-align: center;
+  }
+  
+  .fileInput {
+    display: none; /* Hide the actual file input */
+  }
+  
+  .filePlaceholder {
+    font-size: 14px;
+    color: #666;
+  }
+  

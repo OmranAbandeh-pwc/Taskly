@@ -23,6 +23,7 @@ import * as Yup from "yup";
 import DateSelector from "../../components/DateSelector/DateSelector";
 import { useState } from "react";
 import { formatDate } from "../../functions/date";
+import FileUploader from "../../components/common/FileUploader/FileUploader";
 
 interface FormValues {
   title: string;
@@ -30,6 +31,7 @@ interface FormValues {
   level: string;
   startDate: string;
   endDate: string;
+  image: File | null;
 }
 
 // TODO add date filed to the task
@@ -48,21 +50,22 @@ const CreateTaskPage = () => {
 
   const handleCreateTask = (values: FormValues) => {
     const myHeaders = new Headers();
-    myHeaders.append("Content-Type", "application/json");
     myHeaders.append("Authorization", `Bearer ${userToken}`);
 
-    const raw = JSON.stringify({
-      title: values.title,
-      subTitle: values.subTitle,
-      importance: values.level,
-      startDate: formattedStartDate,
-      endDate: formattedEndDate,
-    });
+    const formdata = new FormData();
 
+    formdata.append("title", values.title);
+    formdata.append("subTitle", values.subTitle);
+    formdata.append("importance", values.level);
+    formdata.append("startDate", formattedStartDate);
+    formdata.append("endDate", formattedEndDate);
+    if (values.image) {
+      formdata.append("image", values.image);
+    }
     const requestOptions: any = {
       method: "POST",
       headers: myHeaders,
-      body: raw,
+      body: formdata,
       redirect: "follow",
     };
 
@@ -83,6 +86,7 @@ const CreateTaskPage = () => {
     level: "",
     startDate: "",
     endDate: "",
+    image: null,
   };
 
   // Validation schema (using Yup)
@@ -133,6 +137,11 @@ const CreateTaskPage = () => {
                     formik.touched.subTitle
                       ? (formik.errors.subTitle as string)
                       : ""
+                  }
+                />
+                <FileUploader
+                  onChange={(e) =>
+                    formik.setFieldValue("image", e.target.files![0])
                   }
                 />
                 <Dropdown

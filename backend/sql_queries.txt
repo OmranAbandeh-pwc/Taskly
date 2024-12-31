@@ -21,5 +21,6 @@ CREATE TABLE Tasks (
     subTitle NVARCHAR(MAX),                   -- Subtitle or description of the task
     importance NVARCHAR(50) NOT NULL,         -- Importance as a string (e.g., 'Low', 'Medium', 'High')
     startDate DATE NOT NULL,                  -- Start date of the task
-    endDate DATE NOT NULL                     -- End date of the task
+    endDate DATE NOT NULL,                    -- End date of the task
+    image NVARCHAR(MAX)                       -- URL of the uploaded image
 );

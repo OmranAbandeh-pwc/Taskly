@@ -22,9 +22,10 @@ export const verifyToken = async (
         res.sendStatus(403);
       } else {
         req.userid = authData.id;
+        next();
       }
     });
-    next();
+  
   } else {
     res.sendStatus(403);
   }

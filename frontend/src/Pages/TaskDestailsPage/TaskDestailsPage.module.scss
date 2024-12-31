@@ -63,6 +63,10 @@
       width: 12px;
       border-radius: 100%;
     }
+    .taskPic {
+      width: 100%;
+      height: 300px;
+    }
     @media (max-width: 768px) {
       .cardTitle {
         font-size: 26px;

@@ -2,14 +2,34 @@ import { Request, Response } from "express";
 import RequestWithUserRole from "../../types/user";
 import { connectToDatabase } from "../../DB/dbConfig";
 import sql from "mssql";
+import sharp from "sharp";
+import { BlobServiceClient } from "@azure/storage-blob";
 
-// TODO add date to the task
+// Azure Blob Storage setup
+const AZURE_STORAGE_CONNECTION_STRING = `${process.env.AZURE_STORAGE_CONNECTION_STRING}`;
+const containerName = `${process.env.CONTAINER_NAME}`; // Name of the container where images will be stored
+
+const blobServiceClient = BlobServiceClient.fromConnectionString(
+  AZURE_STORAGE_CONNECTION_STRING
+);
+const containerClient = blobServiceClient.getContainerClient(containerName);
+
+// Ensure the container exists
+async function ensureContainerExists() {
+  const exists = await containerClient.exists();
+  if (!exists) {
+    await containerClient.create();
+  }
+}
+ensureContainerExists();
+
 // Add a new task ----------------------------------------------------------------------
 export const addNewTaskController = async (
   req: RequestWithUserRole,
   res: Response
 ): Promise<Response> => {
   const userid = req.userid;
+  const image = req.file;
   const { title, subTitle, importance, startDate, endDate } = req.body;
 
   try {
@@ -30,10 +50,24 @@ export const addNewTaskController = async (
       });
     }
 
+    let imageUrl: string | null = null;
+
+    if (image) {
+      const { originalname, buffer } = image;
+      const blobName = `${Date.now()}-${originalname}`; // Unique blob name with timestamp
+      const blockBlobClient = containerClient.getBlockBlobClient(blobName);
+
+      // Upload the image
+      await blockBlobClient.uploadData(buffer);
+
+      // Get the URL of the uploaded image
+      imageUrl = blockBlobClient.url;
+    }
+
     const pool = await connectToDatabase();
     const query = `
-        INSERT INTO Tasks (userid, title, subTitle, importance, startDate, endDate)
-        VALUES (@userid, @title, @subTitle, @importance, @startDate, @endDate)
+        INSERT INTO Tasks (userid, title, subTitle, importance, startDate, endDate, image)
+        VALUES (@userid, @title, @subTitle, @importance, @startDate, @endDate, @image)
       `;
     await pool
       .request()
@@ -43,6 +77,7 @@ export const addNewTaskController = async (
       .input("importance", sql.NVarChar, importance)
       .input("startDate", sql.Date, startDate) // Ensure dates are passed correctly
       .input("endDate", sql.Date, endDate)
+      .input("image", sql.NVarChar, imageUrl)
       .query(query);
 
     return res
@@ -129,7 +164,7 @@ export const getTaskController = async (
   try {
     const pool = await connectToDatabase();
     const query =
-      "SELECT title, subTitle, importance, startDate, endDate FROM Tasks WHERE id = @id";
+      "SELECT title, subTitle, importance, startDate, endDate, image FROM Tasks WHERE id = @id";
     const result = await pool
       .request()
       .input("id", sql.Int, id) // Ensure 'id' is treated as an integer
