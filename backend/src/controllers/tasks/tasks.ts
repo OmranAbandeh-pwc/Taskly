@@ -2,7 +2,6 @@ import { Request, Response } from "express";
 import RequestWithUserRole from "../../types/user";
 import { connectToDatabase } from "../../DB/dbConfig";
 import sql from "mssql";
-import sharp from "sharp";
 import { BlobServiceClient } from "@azure/storage-blob";
 
 // Azure Blob Storage setup
@@ -50,7 +49,7 @@ export const addNewTaskController = async (
       });
     }
 
-    let imageUrl: string | null = null;
+    let imageInfo: { imageName: string; imageUrl: string } | null = null;
 
     if (image) {
       const { originalname, buffer } = image;
@@ -61,7 +60,10 @@ export const addNewTaskController = async (
       await blockBlobClient.uploadData(buffer);
 
       // Get the URL of the uploaded image
-      imageUrl = blockBlobClient.url;
+      imageInfo = {
+        imageName: blockBlobClient.name,
+        imageUrl: blockBlobClient.url,
+      };
     }
 
     const pool = await connectToDatabase();
@@ -77,7 +79,7 @@ export const addNewTaskController = async (
       .input("importance", sql.NVarChar, importance)
       .input("startDate", sql.Date, startDate) // Ensure dates are passed correctly
       .input("endDate", sql.Date, endDate)
-      .input("image", sql.NVarChar, imageUrl)
+      .input("image", sql.NVarChar, imageInfo?.imageUrl)
       .query(query);
 
     return res
@@ -187,23 +189,39 @@ export const getTaskController = async (
   }
 };
 
-// Update a task ----------------------------------------------------------------------
 export const updateTaskController = async (
   req: Request,
   res: Response
 ): Promise<Response> => {
   const { id } = req.params;
   const { title, subTitle, importance, startDate, endDate } = req.body;
+  const file = req.file; // Check if a new image is uploaded
 
   try {
     const pool = await connectToDatabase();
+
+    let imageUrl: string | null = null;
+
+    // Handle image upload if a new file is provided
+    if (file) {
+      const { originalname, buffer } = file;
+      const blobName = `${Date.now()}-${originalname}`; // Generate a unique name for the blob
+      const blockBlobClient = containerClient.getBlockBlobClient(blobName);
+
+      // Upload the new image to Azure Blob Storage
+      await blockBlobClient.uploadData(buffer);
+      imageUrl = blockBlobClient.url; // Get the URL of the uploaded image
+    }
+
+    // SQL query to update the task
     const query = `
       UPDATE Tasks
       SET title = @title, 
           subTitle = @subTitle, 
           importance = @importance, 
           startDate = @startDate, 
-          endDate = @endDate
+          endDate = @endDate,
+          image = CASE WHEN @image IS NOT NULL THEN @image ELSE image END
       WHERE id = @id
     `;
     const result = await pool
@@ -212,17 +230,19 @@ export const updateTaskController = async (
       .input("title", sql.NVarChar, title)
       .input("subTitle", sql.NVarChar, subTitle || null)
       .input("importance", sql.NVarChar, importance)
-      .input("startDate", sql.DateTime, startDate) // Ensure startDate is passed as DateTime
+      .input("startDate", sql.DateTime, startDate)
       .input("endDate", sql.DateTime, endDate)
+      .input("image", sql.NVarChar, imageUrl || null) // Pass the new image URL or null
       .query(query);
 
     if (result.rowsAffected[0] === 0) {
       return res.status(404).json({ status: 404, message: "Task not found" });
     }
 
-    return res
-      .status(200)
-      .json({ status: 200, message: "Task updated successfully" });
+    return res.status(200).json({
+      status: 200,
+      message: "Task updated successfully",
+    });
   } catch (error: any) {
     console.error("Error updating task:", error.message);
     return res.status(500).json({
@@ -233,7 +253,6 @@ export const updateTaskController = async (
   }
 };
 
-// Delete a task ----------------------------------------------------------------------
 export const deleteTaskController = async (
   req: Request,
   res: Response
@@ -242,16 +261,47 @@ export const deleteTaskController = async (
 
   try {
     const pool = await connectToDatabase();
-    const query = "DELETE FROM Tasks WHERE id = @id";
-    const result = await pool.request().input("id", sql.Int, id).query(query);
 
-    if (result.rowsAffected[0] === 0) {
+    // Step 1: Retrieve the image URL from the database
+    const selectQuery = "SELECT image FROM Tasks WHERE id = @id";
+    const selectResult = await pool
+      .request()
+      .input("id", sql.Int, id)
+      .query(selectQuery);
+
+    if (selectResult.recordset.length === 0) {
       return res.status(404).json({ status: 404, message: "Task not found" });
     }
 
-    return res
-      .status(200)
-      .json({ status: 200, message: "Task deleted successfully" });
+    const imageUrl = selectResult.recordset[0].image;
+
+    // Step 2: Delete the image from Azure Blob Storage (if it exists)
+    if (imageUrl) {
+      try {
+        const blobName = decodeURIComponent(imageUrl.split("/").pop());
+
+        if (blobName) {
+          const blockBlobClient = containerClient.getBlockBlobClient(blobName);
+          const deleteResponse = await blockBlobClient.deleteIfExists();
+        } else {
+          console.warn(
+            "Blob name could not be determined from imageUrl:",
+            imageUrl
+          );
+        }
+      } catch (blobError: any) {
+        console.error("Error deleting blob:", blobError.message);
+      }
+    }
+
+    // Step 3: Delete the task from the database
+    const deleteQuery = "DELETE FROM Tasks WHERE id = @id";
+    await pool.request().input("id", sql.Int, id).query(deleteQuery);
+
+    return res.status(200).json({
+      status: 200,
+      message: "Task and associated image deleted successfully",
+    });
   } catch (error: any) {
     console.error("Error deleting task:", error.message);
     return res.status(500).json({

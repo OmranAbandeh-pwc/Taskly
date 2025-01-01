@@ -38,7 +38,10 @@ router.get(TASK_API.GET_ALL_TASKS, verifyToken, getTasksFilterController);
 router.get(TASK_API.GET_TASK, getTaskController);
 
 // Update a task
-router.put(TASK_API.UPDATE_TASK, updateTaskController);
+router.put(TASK_API.UPDATE_TASK, upload.single("image"), updateTaskController);
 
 // Delete a task
-router.delete(TASK_API.DELETE_TASK, deleteTaskController);
+router.delete(
+  TASK_API.DELETE_TASK,
+  deleteTaskController
+);
