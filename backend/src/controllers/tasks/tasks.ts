@@ -4,6 +4,11 @@ import { connectToDatabase } from "../../DB/dbConfig";
 import sql from "mssql";
 import { BlobServiceClient } from "@azure/storage-blob";
 
+interface ImageInfo {
+  imageName: string;
+  imageUrl: string;
+}
+
 // Azure Blob Storage setup
 const AZURE_STORAGE_CONNECTION_STRING = `${process.env.AZURE_STORAGE_CONNECTION_STRING}`;
 const containerName = `${process.env.CONTAINER_NAME}`; // Name of the container where images will be stored
@@ -22,7 +27,7 @@ async function ensureContainerExists() {
 }
 ensureContainerExists();
 
-// Add a new task ----------------------------------------------------------------------
+// Add a new task Controller------------------------------------------------------------------
 export const addNewTaskController = async (
   req: RequestWithUserRole,
   res: Response
@@ -49,7 +54,7 @@ export const addNewTaskController = async (
       });
     }
 
-    let imageInfo: { imageName: string; imageUrl: string } | null = null;
+    let imageInfo: ImageInfo | null = null;
 
     if (image) {
       const { originalname, buffer } = image;
@@ -68,8 +73,8 @@ export const addNewTaskController = async (
 
     const pool = await connectToDatabase();
     const query = `
-        INSERT INTO Tasks (userid, title, subTitle, importance, startDate, endDate, image)
-        VALUES (@userid, @title, @subTitle, @importance, @startDate, @endDate, @image)
+        INSERT INTO Tasks (userid, title, subTitle, importance, startDate, endDate,imageName, imageUrl)
+        VALUES (@userid, @title, @subTitle, @importance, @startDate, @endDate,@imageName, @imageUrl)
       `;
     await pool
       .request()
@@ -79,7 +84,8 @@ export const addNewTaskController = async (
       .input("importance", sql.NVarChar, importance)
       .input("startDate", sql.Date, startDate) // Ensure dates are passed correctly
       .input("endDate", sql.Date, endDate)
-      .input("image", sql.NVarChar, imageInfo?.imageUrl)
+      .input("imageUrl", sql.NVarChar, imageInfo?.imageUrl)
+      .input("imageName", sql.NVarChar, imageInfo?.imageName)
       .query(query);
 
     return res
@@ -95,7 +101,7 @@ export const addNewTaskController = async (
   }
 };
 
-// Get all tasks for a specific user ----------------------------------------------------------------------
+// Get all tasks for a specific user Controller ----------------------------------------------
 export const getTasksFilterController = async (
   req: RequestWithUserRole,
   res: Response
@@ -152,7 +158,7 @@ export const getTasksFilterController = async (
   }
 };
 
-// Get task for a specific user
+// Get task for a specific user Controller ---------------------------------------------------
 export const getTaskController = async (
   req: Request,
   res: Response
@@ -166,7 +172,7 @@ export const getTaskController = async (
   try {
     const pool = await connectToDatabase();
     const query =
-      "SELECT title, subTitle, importance, startDate, endDate, image FROM Tasks WHERE id = @id";
+      "SELECT title, subTitle, importance, startDate, endDate, imageName, imageUrl FROM Tasks WHERE id = @id";
     const result = await pool
       .request()
       .input("id", sql.Int, id) // Ensure 'id' is treated as an integer
@@ -189,6 +195,7 @@ export const getTaskController = async (
   }
 };
 
+// Update Task Controller --------------------------------------------------------------------
 export const updateTaskController = async (
   req: Request,
   res: Response
@@ -200,7 +207,7 @@ export const updateTaskController = async (
   try {
     const pool = await connectToDatabase();
 
-    let imageUrl: string | null = null;
+    let imageInfo: ImageInfo | null = null;
 
     // Handle image upload if a new file is provided
     if (file) {
@@ -210,7 +217,10 @@ export const updateTaskController = async (
 
       // Upload the new image to Azure Blob Storage
       await blockBlobClient.uploadData(buffer);
-      imageUrl = blockBlobClient.url; // Get the URL of the uploaded image
+      imageInfo = {
+        imageName: blockBlobClient.name,
+        imageUrl: blockBlobClient.url,
+      }; // Get the URL of the uploaded image
     }
 
     // SQL query to update the task
@@ -221,7 +231,8 @@ export const updateTaskController = async (
           importance = @importance, 
           startDate = @startDate, 
           endDate = @endDate,
-          image = CASE WHEN @image IS NOT NULL THEN @image ELSE image END
+          imageName = CASE WHEN @imageName IS NOT NULL THEN @imageName ELSE imageName END,
+          imageUrl = CASE WHEN @imageUrl IS NOT NULL THEN @imageUrl ELSE imageUrl END
       WHERE id = @id
     `;
     const result = await pool
@@ -232,7 +243,8 @@ export const updateTaskController = async (
       .input("importance", sql.NVarChar, importance)
       .input("startDate", sql.DateTime, startDate)
       .input("endDate", sql.DateTime, endDate)
-      .input("image", sql.NVarChar, imageUrl || null) // Pass the new image URL or null
+      .input("imageName", sql.NVarChar, imageInfo?.imageName || null) // Pass the new image URL or null
+      .input("imageUrl", sql.NVarChar, imageInfo?.imageUrl || null) // Pass the new image URL or null
       .query(query);
 
     if (result.rowsAffected[0] === 0) {
@@ -253,6 +265,7 @@ export const updateTaskController = async (
   }
 };
 
+// Delete Task Controller --------------------------------------------------------------------
 export const deleteTaskController = async (
   req: Request,
   res: Response
@@ -263,7 +276,7 @@ export const deleteTaskController = async (
     const pool = await connectToDatabase();
 
     // Step 1: Retrieve the image URL from the database
-    const selectQuery = "SELECT image FROM Tasks WHERE id = @id";
+    const selectQuery = "SELECT imageName, imageUrl FROM Tasks WHERE id = @id";
     const selectResult = await pool
       .request()
       .input("id", sql.Int, id)
