@@ -18,6 +18,7 @@ import {
   dropdownPlaceholder,
   taskLevels,
   dateSelectorPlaceholder,
+  fileUploaderPlaceholder,
 } from "../../json/static/staticCreateTaskPage";
 import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
@@ -26,6 +27,7 @@ import DateSelector from "../../components/DateSelector/DateSelector";
 import { formatDateTypeTwo } from "../../functions/date";
 import { getLanguage } from "../../hooks/getLanguage";
 import FileUploader from "../../components/common/FileUploader/FileUploader";
+import { ThreeDots } from "react-loader-spinner";
 
 interface FormValues {
   title: string;
@@ -42,6 +44,7 @@ const TaskEditPage = () => {
   const navigate = useNavigate();
   const lang = getLanguage();
   const [card, setCard] = useState<FormValues>();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const fetchDetails = () => {
     const requestOptions: any = {
@@ -63,9 +66,9 @@ const TaskEditPage = () => {
     fetchDetails();
   }, []);
 
-  const handleEditTask = (values: FormValues) => {
+  const handleEditTask = async (values: FormValues) => {
+    setIsLoading(true);
     const myHeaders = new Headers();
-
     const formdata = new FormData();
 
     formdata.append("title", values.title);
@@ -84,7 +87,7 @@ const TaskEditPage = () => {
       redirect: "follow",
     };
 
-    fetch(`${API.put.EDIT_TASK}/${id}`, requestOptions)
+    await fetch(`${API.put.EDIT_TASK}/${id}`, requestOptions)
       .then((response) => response.json())
       .then((result) => {
         if (result.status === 200) {
@@ -92,6 +95,7 @@ const TaskEditPage = () => {
         }
       })
       .catch((error) => console.error(error));
+    setIsLoading(false);
   };
 
   // Initial values
@@ -176,7 +180,11 @@ const TaskEditPage = () => {
                     }
                   />
                   <FileUploader
-                    placeholder={formik.values.imageName}
+                    placeholder={
+                      formik.values.imageName
+                        ? formik.values.imageName
+                        : fileUploaderPlaceholder
+                    }
                     onChange={(e) =>
                       formik.setFieldValue("image", e.target.files![0])
                     }
@@ -203,12 +211,25 @@ const TaskEditPage = () => {
                     ]}
                     onChange={handleDateChange}
                   />
-                  <Button
-                    title={editButtonText}
-                    type="type-1"
-                    className={styles.inputs}
-                    onClick={formik.handleSubmit}
-                  />
+                  {isLoading ? (
+                    <ThreeDots
+                      visible={true}
+                      height="60"
+                      width="60"
+                      color="#646EC8"
+                      radius="9"
+                      ariaLabel="three-dots-loading"
+                      wrapperStyle={{}}
+                      wrapperClass=""
+                    />
+                  ) : (
+                    <Button
+                      title={editButtonText}
+                      type="type-1"
+                      className={styles.inputs}
+                      onClick={formik.handleSubmit}
+                    />
+                  )}
                 </div>
               </div>
             </div>
