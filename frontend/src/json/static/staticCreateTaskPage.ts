@@ -13,6 +13,7 @@ const taskLevels = [
 ];
 const editButtonText = "Edit Task";
 const dateSelectorPlaceholder = "Select Date";
+const fileUploaderPlaceholder = "Select File";
 
 export {
   titleInputLabel,
@@ -25,4 +26,5 @@ export {
   taskLevels,
   editButtonText,
   dateSelectorPlaceholder,
+  fileUploaderPlaceholder,
 };

@@ -14,6 +14,7 @@ import {
   dropdownPlaceholder,
   taskLevels,
   dateSelectorPlaceholder,
+  fileUploaderPlaceholder,
 } from "../../json/static/staticCreateTaskPage";
 import { userToken } from "../../shared/variables";
 import { API, PAGES } from "../../shared/routes";
@@ -24,6 +25,7 @@ import DateSelector from "../../components/DateSelector/DateSelector";
 import { useState } from "react";
 import { formatDate } from "../../functions/date";
 import FileUploader from "../../components/common/FileUploader/FileUploader";
+import { ThreeDots } from "react-loader-spinner";
 
 interface FormValues {
   title: string;
@@ -34,13 +36,12 @@ interface FormValues {
   image: File | null;
 }
 
-// TODO add date filed to the task
-// TODO add drop down to choose level of the task
 const CreateTaskPage = () => {
   const navigate = useNavigate();
   const [selectedValue, setSelectedValue] = useState<string | [string, string]>(
     ""
   );
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const formattedStartDate = formatDate(selectedValue[0]);
   const formattedEndDate = formatDate(selectedValue[1]);
 
@@ -48,7 +49,8 @@ const CreateTaskPage = () => {
     setSelectedValue(value);
   };
 
-  const handleCreateTask = (values: FormValues) => {
+  const handleCreateTask = async (values: FormValues) => {
+    setIsLoading(true);
     const myHeaders = new Headers();
     myHeaders.append("Authorization", `Bearer ${userToken}`);
 
@@ -69,7 +71,7 @@ const CreateTaskPage = () => {
       redirect: "follow",
     };
 
-    fetch(API.post.ADD_TASK, requestOptions)
+    await fetch(API.post.ADD_TASK, requestOptions)
       .then((response) => response.json())
       .then((result) => {
         if (result.status === 200) {
@@ -77,6 +79,7 @@ const CreateTaskPage = () => {
         }
       })
       .catch((error) => console.error(error));
+    setIsLoading(false);
   };
 
   // Initial values
@@ -140,6 +143,7 @@ const CreateTaskPage = () => {
                   }
                 />
                 <FileUploader
+                  placeholder={fileUploaderPlaceholder}
                   onChange={(e) =>
                     formik.setFieldValue("image", e.target.files![0])
                   }
@@ -157,12 +161,25 @@ const CreateTaskPage = () => {
                   value={selectedValue}
                   onChange={handleDateChange}
                 />
-                <Button
-                  title={createButtonText}
-                  type="type-1"
-                  className={styles.inputs}
-                  onClick={formik.handleSubmit}
-                />
+                {isLoading ? (
+                  <ThreeDots
+                    visible={true}
+                    height="60"
+                    width="60"
+                    color="#646EC8"
+                    radius="9"
+                    ariaLabel="three-dots-loading"
+                    wrapperStyle={{}}
+                    wrapperClass=""
+                  />
+                ) : (
+                  <Button
+                    title={createButtonText}
+                    type="type-1"
+                    className={styles.inputs}
+                    onClick={formik.handleSubmit}
+                  />
+                )}
               </div>
             </div>
           </div>
