@@ -5,7 +5,8 @@ export interface TaskCardProps {
   title: string;
   subTitle: string;
   importance: string;
-  image?:string
+  imageName?: string;
+  imageUrl?:string
 }
 
 export interface TaskCardsSectionProps {

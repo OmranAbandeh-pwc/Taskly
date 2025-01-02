@@ -25,6 +25,7 @@ import { API, PAGES } from "../../shared/routes";
 import DateSelector from "../../components/DateSelector/DateSelector";
 import { formatDateTypeTwo } from "../../functions/date";
 import { getLanguage } from "../../hooks/getLanguage";
+import FileUploader from "../../components/common/FileUploader/FileUploader";
 
 interface FormValues {
   title: string;
@@ -32,6 +33,8 @@ interface FormValues {
   importance: string;
   startDate: any;
   endDate: any;
+  image: File | null;
+  imageName: string;
 }
 
 const TaskEditPage = () => {
@@ -62,20 +65,22 @@ const TaskEditPage = () => {
 
   const handleEditTask = (values: FormValues) => {
     const myHeaders = new Headers();
-    myHeaders.append("Content-Type", "application/json");
 
-    const raw = JSON.stringify({
-      title: values.title,
-      subTitle: values.subTitle,
-      importance: values.importance,
-      startDate: values.startDate,
-      endDate: values.endDate,
-    });
+    const formdata = new FormData();
+
+    formdata.append("title", values.title);
+    formdata.append("subTitle", values.subTitle);
+    formdata.append("importance", values.importance);
+    formdata.append("startDate", values.startDate);
+    formdata.append("endDate", values.endDate);
+    if (values.image) {
+      formdata.append("image", values.image);
+    }
 
     const requestOptions: any = {
       method: "PUT",
       headers: myHeaders,
-      body: raw,
+      body: formdata,
       redirect: "follow",
     };
 
@@ -96,6 +101,8 @@ const TaskEditPage = () => {
     importance: card ? card.importance : "",
     startDate: card ? card.startDate : "",
     endDate: card ? card.endDate : "",
+    image: null,
+    imageName: card ? card.imageName : "",
   };
 
   // Validation schema (using Yup)
@@ -166,6 +173,12 @@ const TaskEditPage = () => {
                       formik.touched.subTitle
                         ? (formik.errors.subTitle as string)
                         : ""
+                    }
+                  />
+                  <FileUploader
+                    placeholder={formik.values.imageName}
+                    onChange={(e) =>
+                      formik.setFieldValue("image", e.target.files![0])
                     }
                   />
                   <Dropdown

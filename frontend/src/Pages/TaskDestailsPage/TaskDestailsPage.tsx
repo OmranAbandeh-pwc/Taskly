@@ -92,8 +92,8 @@ const TaskDestailsPage = () => {
 
           <Text styles={styles.cardTitle} text={card.title} />
         </div>
-        {card.image && (
-          <Picture className={styles.taskPic} image={card.image} />
+        {card.imageUrl && (
+          <Picture className={styles.taskPic} image={card.imageUrl} />
         )}
         <Text styles={styles.cardSubTitle} text={card.subTitle} />
       </div>

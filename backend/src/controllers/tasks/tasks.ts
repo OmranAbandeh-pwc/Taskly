@@ -121,12 +121,12 @@ export const getTasksFilterController = async (
     const query =
       importance === "all"
         ? `
-          SELECT id, title, subTitle, importance, startDate, endDate
+          SELECT id, title, subTitle, importance, startDate, endDate, imageName, imageUrl
           FROM Tasks
           WHERE userid = @userid
         `
         : `
-          SELECT id, title, subTitle, importance, startDate, endDate
+          SELECT id, title, subTitle, importance, startDate, endDate, imageName, imageUrl
           FROM Tasks
           WHERE userid = @userid AND importance = @importance
         `;

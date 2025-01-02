@@ -10,7 +10,6 @@ export const userDetailsController = async (
 ): Promise<Response> => {
   const userid = req.userid;
 
-  console.log("userid : ",userid)
   try {
     const pool = await connectToDatabase();
     const query = `

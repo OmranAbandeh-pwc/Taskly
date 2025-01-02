@@ -7,6 +7,7 @@ import { PAGES } from "../../../shared/routes";
 import { formatDateTypeTwo } from "../../../functions/date";
 import { getLanguage } from "../../../hooks/getLanguage";
 import { getImportanceColor } from "../../../functions/filterColors";
+import Picture from "../../common/Picture/Picture";
 
 const TaskCard: React.FC<TaskCardProps> = ({
   id,
@@ -15,8 +16,10 @@ const TaskCard: React.FC<TaskCardProps> = ({
   title,
   subTitle,
   importance,
+  imageUrl,
 }) => {
   const lang = getLanguage();
+
   return (
     <Link className={styles.cardLink} to={`${PAGES.TASK_DETAILS_PAGE}/${id}`}>
       <div className={styles.card}>
@@ -39,6 +42,7 @@ const TaskCard: React.FC<TaskCardProps> = ({
           ></span>
           <Text styles={styles.title} text={title} />
         </div>
+        {imageUrl && <Picture className={styles.image} image={`${imageUrl}`} />}
         <Text styles={styles.description} text={subTitle} />
       </div>
     </Link>

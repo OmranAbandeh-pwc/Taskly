@@ -91,7 +91,7 @@ const CreateTaskPage = () => {
 
   // Validation schema (using Yup)
   const validationSchema = Yup.object({
-    title: Yup.string().required(emptyFieldText),
+    title: Yup.string().required(emptyFieldText).max(40),
     subTitle: Yup.string().required(emptyFieldText),
     level: Yup.string().required(emptyFieldText),
   });
