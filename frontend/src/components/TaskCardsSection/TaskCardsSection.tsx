@@ -3,13 +3,17 @@ import Loader from "../Loader/Loader";
 import TaskCard from "./TaskCard/TaskCard";
 import styles from "./TaskCardsSection.module.scss";
 import { TaskCardsSectionProps } from "./TaskCardsSectionTypes";
+import { noTasksText } from "../../json/static/staticGeneral";
 
 const TaskCardsSection: React.FC<TaskCardsSectionProps> = ({
   cards,
   isLoading,
   noTasksFoundText,
 }) => {
+<<<<<<< HEAD
   
+=======
+>>>>>>> bef383bd9cdb2974c0cb83e853976afd462cd95a
   return isLoading ? (
     <div className={styles.centered}>
       <Loader />
@@ -29,7 +33,10 @@ const TaskCardsSection: React.FC<TaskCardsSectionProps> = ({
           title={card.title}
           subTitle={card.subTitle}
           importance={card.importance}
+<<<<<<< HEAD
           imageUrl={card.imageUrl}
+=======
+>>>>>>> bef383bd9cdb2974c0cb83e853976afd462cd95a
         />
       ))}
     </div>
