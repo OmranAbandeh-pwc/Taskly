@@ -8,7 +8,6 @@ import {
   deleteTaskController,
 } from "../../controllers/tasks/tasks";
 import { TASK_API } from "../../routes/routes";
-<<<<<<< HEAD
 import multer from "multer";
 
 export const router = express.Router();
@@ -31,13 +30,6 @@ router.post(
   verifyToken,
   addNewTaskController
 );
-=======
-
-export const router = express.Router();
-
-// Create task a POST route
-router.post(TASK_API.ADD_TASK, verifyToken, addNewTaskController);
->>>>>>> bef383bd9cdb2974c0cb83e853976afd462cd95a
 
 // Get All Tasks
 router.get(TASK_API.GET_ALL_TASKS, verifyToken, getTasksFilterController);
@@ -46,7 +38,6 @@ router.get(TASK_API.GET_ALL_TASKS, verifyToken, getTasksFilterController);
 router.get(TASK_API.GET_TASK, getTaskController);
 
 // Update a task
-<<<<<<< HEAD
 router.put(TASK_API.UPDATE_TASK, upload.single("image"), updateTaskController);
 
 // Delete a task
@@ -54,11 +45,3 @@ router.delete(
   TASK_API.DELETE_TASK,
   deleteTaskController
 );
-=======
-router.put(TASK_API.UPDATE_TASK, updateTaskController);
-
-// Delete a task
-router.delete(TASK_API.DELETE_TASK, deleteTaskController);
-
-// router.get(GET_USER_DETAILS, verifyToken, userDetailsController);
->>>>>>> bef383bd9cdb2974c0cb83e853976afd462cd95a

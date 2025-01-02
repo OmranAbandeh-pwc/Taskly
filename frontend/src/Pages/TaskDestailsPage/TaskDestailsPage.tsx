@@ -102,10 +102,6 @@ const TaskDestailsPage = () => {
     <></>
   );
 };
-  ) : (
-    <></>
-  );
-};
 
-export default TaskDestailsPage;
+
 export default TaskDestailsPage;

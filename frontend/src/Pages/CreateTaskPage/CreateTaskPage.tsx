@@ -23,10 +23,7 @@ import * as Yup from "yup";
 import DateSelector from "../../components/DateSelector/DateSelector";
 import { useState } from "react";
 import { formatDate } from "../../functions/date";
-<<<<<<< HEAD
 import FileUploader from "../../components/common/FileUploader/FileUploader";
-=======
->>>>>>> bef383bd9cdb2974c0cb83e853976afd462cd95a
 
 interface FormValues {
   title: string;
@@ -34,10 +31,7 @@ interface FormValues {
   level: string;
   startDate: string;
   endDate: string;
-<<<<<<< HEAD
   image: File | null;
-=======
->>>>>>> bef383bd9cdb2974c0cb83e853976afd462cd95a
 }
 
 // TODO add date filed to the task
@@ -56,7 +50,6 @@ const CreateTaskPage = () => {
 
   const handleCreateTask = (values: FormValues) => {
     const myHeaders = new Headers();
-<<<<<<< HEAD
     myHeaders.append("Authorization", `Bearer ${userToken}`);
 
     const formdata = new FormData();
@@ -73,23 +66,6 @@ const CreateTaskPage = () => {
       method: "POST",
       headers: myHeaders,
       body: formdata,
-=======
-    myHeaders.append("Content-Type", "application/json");
-    myHeaders.append("Authorization", `Bearer ${userToken}`);
-
-    const raw = JSON.stringify({
-      title: values.title,
-      subTitle: values.subTitle,
-      importance: values.level,
-      startDate: formattedStartDate,
-      endDate: formattedEndDate,
-    });
-
-    const requestOptions: any = {
-      method: "POST",
-      headers: myHeaders,
-      body: raw,
->>>>>>> bef383bd9cdb2974c0cb83e853976afd462cd95a
       redirect: "follow",
     };
 
@@ -110,19 +86,12 @@ const CreateTaskPage = () => {
     level: "",
     startDate: "",
     endDate: "",
-<<<<<<< HEAD
     image: null,
-=======
->>>>>>> bef383bd9cdb2974c0cb83e853976afd462cd95a
   };
 
   // Validation schema (using Yup)
   const validationSchema = Yup.object({
-<<<<<<< HEAD
     title: Yup.string().required(emptyFieldText).max(40),
-=======
-    title: Yup.string().required(emptyFieldText),
->>>>>>> bef383bd9cdb2974c0cb83e853976afd462cd95a
     subTitle: Yup.string().required(emptyFieldText),
     level: Yup.string().required(emptyFieldText),
   });
@@ -170,14 +139,11 @@ const CreateTaskPage = () => {
                       : ""
                   }
                 />
-<<<<<<< HEAD
                 <FileUploader
                   onChange={(e) =>
                     formik.setFieldValue("image", e.target.files![0])
                   }
                 />
-=======
->>>>>>> bef383bd9cdb2974c0cb83e853976afd462cd95a
                 <Dropdown
                   options={taskLevels}
                   placeholder={dropdownPlaceholder}

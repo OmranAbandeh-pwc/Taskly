@@ -22,16 +22,10 @@ export const verifyToken = async (
         res.sendStatus(403);
       } else {
         req.userid = authData.id;
-<<<<<<< HEAD
         next();
       }
     });
   
-=======
-      }
-    });
-    next();
->>>>>>> bef383bd9cdb2974c0cb83e853976afd462cd95a
   } else {
     res.sendStatus(403);
   }
