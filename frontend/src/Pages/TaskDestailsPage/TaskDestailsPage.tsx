@@ -10,6 +10,7 @@ import { TaskCardProps } from "../../components/TaskCardsSection/TaskCardsSectio
 import { getImportanceColor } from "../../functions/filterColors";
 import { formatDateTypeTwo } from "../../functions/date";
 import { getLanguage } from "../../hooks/getLanguage";
+import Picture from "../../components/common/Picture/Picture";
 
 const TaskDestailsPage = () => {
   const navigate = useNavigate();
@@ -91,6 +92,9 @@ const TaskDestailsPage = () => {
 
           <Text styles={styles.cardTitle} text={card.title} />
         </div>
+        {card.imageUrl && (
+          <Picture className={styles.taskPic} image={card.imageUrl} />
+        )}
         <Text styles={styles.cardSubTitle} text={card.subTitle} />
       </div>
     </div>
@@ -98,5 +102,6 @@ const TaskDestailsPage = () => {
     <></>
   );
 };
+
 
 export default TaskDestailsPage;

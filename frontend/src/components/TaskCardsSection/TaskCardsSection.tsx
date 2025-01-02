@@ -10,6 +10,7 @@ const TaskCardsSection: React.FC<TaskCardsSectionProps> = ({
   isLoading,
   noTasksFoundText,
 }) => {
+  
   return isLoading ? (
     <div className={styles.centered}>
       <Loader />
@@ -29,6 +30,7 @@ const TaskCardsSection: React.FC<TaskCardsSectionProps> = ({
           title={card.title}
           subTitle={card.subTitle}
           importance={card.importance}
+          imageUrl={card.imageUrl}
         />
       ))}
     </div>
@@ -36,3 +38,5 @@ const TaskCardsSection: React.FC<TaskCardsSectionProps> = ({
 };
 
 export default TaskCardsSection;
+
+

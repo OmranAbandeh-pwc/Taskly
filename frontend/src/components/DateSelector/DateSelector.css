@@ -24,6 +24,7 @@
 .input-container .input {
   padding-top: 10px;
   padding-bottom: 10px;
+  padding-inline: 15px;
   cursor: pointer;
 }
 .calendar {
@@ -31,7 +32,7 @@
   top: 100%; /* Position below the input */
   left: 0;
   max-width: var(--calendar-width);
-  z-index: 1000; /* Ensure it's on top of other elements */
+  z-index: 100; /* Ensure it's on top of other elements */
   background: var(--color-white);
   margin-top: 8px;
 }
