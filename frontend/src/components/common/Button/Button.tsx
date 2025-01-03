@@ -23,9 +23,11 @@ const Button: React.FC<ButtonProps> = ({
   const buttonType = (type: string) => {
     let className;
     if (type === "type-1") {
-      className = styles.buttonContainer1;
+      className = `${styles.buttonCommonStyle} ${styles.buttonContainer1}`;
     } else if (type === "type-2") {
-      className = styles.buttonContainer2;
+      className = `${styles.buttonCommonStyle} ${styles.buttonContainer2}`;
+    } else if (type === "type-3") {
+      className = `${styles.buttonCommonStyle} ${styles.buttonContainer3}`;
     }
     return className;
   };

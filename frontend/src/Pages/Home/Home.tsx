@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import { TaskCardProps } from "../../components/TaskCardsSection/TaskCardsSectionTypes";
 import { filterButtons } from "../../json/filtersStatic";
 import { noTasksText } from "../../json/static/staticGeneral";
+import ConfirmationPopup from "../../components/ConfirmationPopup/ConfirmationPopup";
 
 const Home = () => {
   const [cards, setCards] = useState<TaskCardProps[]>();
@@ -92,14 +93,13 @@ const Home = () => {
         activeButton={activeButton}
         setActiveButton={setActiveButton}
         className={styles.toolsBar}
+        moreOptionButton={() => {}}
       />
-      {
-        <TaskCardsSection
-          cards={cards ? cards : []}
-          isLoading={isLoading}
-          noTasksFoundText={noTasksFoundText}
-        />
-      }
+      <TaskCardsSection
+        cards={cards ? cards : []}
+        isLoading={isLoading}
+        noTasksFoundText={noTasksFoundText}
+      />
     </div>
   );
 };

@@ -3,12 +3,21 @@ import Icon from "../common/Icon/Icon";
 import Text from "../common/Text/Text";
 import Drawer from "../common/Drawer/DrawerBox";
 import { userToken } from "../../shared/variables";
-import { API } from "../../shared/routes";
+import { API, PAGES } from "../../shared/routes";
 import { useEffect, useState } from "react";
-import { headerWelcomeText } from "../../json/static/staticGeneral";
+import {
+  cancelText,
+  confirmLogoutMessage,
+  confirmText,
+  headerWelcomeText,
+  warning,
+} from "../../json/static/staticGeneral";
+import ConfirmationPopup from "../ConfirmationPopup/ConfirmationPopup";
 
 const Header = () => {
   const [userFirstName, setUserFirstName] = useState<string>("");
+  const [isPopupOpen, setIsPopupOpen] = useState<boolean>(false); // State for popup
+
   const fetchUserAPI = () => {
     const myHeaders = new Headers();
     myHeaders.append("Authorization", `Bearer ${userToken}`);
@@ -33,6 +42,16 @@ const Header = () => {
     fetchUserAPI();
   }, []);
 
+  const confirmLogout = () => {
+    setIsPopupOpen(true);
+  };
+  const handleLogout = () => {
+    setIsPopupOpen(false);
+    localStorage.removeItem("userToken");
+    sessionStorage.removeItem("userToken");
+    window.location.href = PAGES.INITIAL_PAGE;
+  };
+
   return (
     <header className={styles.header}>
       <div className={styles.userInfoContainer}>
@@ -43,7 +62,10 @@ const Header = () => {
               "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT36VHh-mjL_Rc8IL60D77dMDPL_fNhosHuag&s"
             }
           />
-          <Drawer className={styles.drawerContainer} />
+          <Drawer
+            className={styles.drawerContainer}
+            handleLogout={confirmLogout}
+          />
         </div>
         <Text
           styles={styles.userNameLabel}
@@ -53,6 +75,16 @@ const Header = () => {
           }`}
         />
       </div>
+      {isPopupOpen && (
+        <ConfirmationPopup
+          title={warning}
+          subTitle={confirmLogoutMessage}
+          cancelText={cancelText}
+          confirmText={confirmText}
+          onConfirm={handleLogout}
+          onCancel={() => setIsPopupOpen(false)}
+        />
+      )}
     </header>
   );
 };

@@ -170,7 +170,7 @@ const CreateTaskPage = () => {
                     radius="9"
                     ariaLabel="three-dots-loading"
                     wrapperStyle={{}}
-                    wrapperClass=""
+                    wrapperClass={styles.icontStyle}
                   />
                 ) : (
                   <Button
