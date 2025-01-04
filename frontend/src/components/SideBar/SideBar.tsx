@@ -12,12 +12,15 @@ import {
 } from "../../json/static/staticGeneral";
 import ConfirmationPopup from "../ConfirmationPopup/ConfirmationPopup";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { PAGES } from "../../shared/routes";
 
 interface SideBarProps {
   isOpen: boolean;
 }
 const SideBar: React.FC<SideBarProps> = ({ isOpen }) => {
   const [isPopupOpen, setIsPopupOpen] = useState<boolean>(false); // State for popup
+  const navigate = useNavigate();
 
   const confirmClearAllTasks = () => {
     setIsPopupOpen(true);
@@ -44,7 +47,9 @@ const SideBar: React.FC<SideBarProps> = ({ isOpen }) => {
           className={styles.sidebarBTN}
           textStyles={styles.sidebarBTNText}
           type="type-1"
-          onClick={() => {}}
+          onClick={() => {
+            navigate(`${PAGES.USER_PAGE}`);
+          }}
         />
         <Button
           title={clearAllTaskSidebarBTNTitle}

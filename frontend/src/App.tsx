@@ -9,6 +9,7 @@ import CreateTaskPage from "./Pages/CreateTaskPage/CreateTaskPage";
 import { userToken } from "./shared/variables";
 import TaskEditPage from "./Pages/TaskEditPage/TaskEditPage";
 import { PAGES } from "./shared/routes";
+import UserPage from "./Pages/UserPage/UserPage";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
           <Header />
           <Routes>
             <Route path={PAGES.INITIAL_PAGE} element={<Home />} />
+            <Route path={PAGES.USER_PAGE} element={<UserPage />} />
             <Route
               path={`${PAGES.TASK_DETAILS_PAGE}/:id`}
               element={<TaskDestailsPage />}

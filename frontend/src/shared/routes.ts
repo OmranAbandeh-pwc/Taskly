@@ -2,6 +2,7 @@ const WINDOW_PATH = "http://localhost:5000";
 
 export const PAGES = {
   INITIAL_PAGE: "/",
+  USER_PAGE:"/user/page",
   SIGNUP_PAGE: "/SignupPage",
   TASK_DETAILS_PAGE: "/task/details",
   CREATE_TASK_PAGE: "/task/create",
