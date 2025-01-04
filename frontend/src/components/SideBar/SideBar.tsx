@@ -13,7 +13,8 @@ import {
 import ConfirmationPopup from "../ConfirmationPopup/ConfirmationPopup";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { PAGES } from "../../shared/routes";
+import { API, PAGES } from "../../shared/routes";
+import { userToken } from "../../shared/variables";
 
 interface SideBarProps {
   isOpen: boolean;
@@ -25,8 +26,21 @@ const SideBar: React.FC<SideBarProps> = ({ isOpen }) => {
   const confirmClearAllTasks = () => {
     setIsPopupOpen(true);
   };
-  const handleClearAllTasks = () => {
-    console.log("Confirm Clicked");
+  const handleClearAllTasks = async () => {
+    const myHeaders = new Headers();
+    myHeaders.append("Authorization", `Bearer ${userToken}`);
+
+    const requestOptions: any = {
+      method: "DELETE",
+      headers: myHeaders,
+      redirect: "follow",
+    };
+
+    await fetch(API.delete.DELETE_ALL_TASKS, requestOptions)
+      .then((response) => response.text())
+      .then((result) => console.log(result))
+      .catch((error) => console.error(error));
+    window.location.reload();
     setIsPopupOpen(false);
   };
 

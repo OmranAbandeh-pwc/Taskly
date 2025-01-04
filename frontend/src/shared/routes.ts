@@ -26,6 +26,7 @@ export const API = {
   },
   delete: {
     DELETE_TASK: `${WINDOW_PATH}/api/v1/delete`,
+    DELETE_ALL_TASKS: `${WINDOW_PATH}/api/v1/clear/all/tasks`,
   },
   put: {
     EDIT_TASK: `${WINDOW_PATH}/api/v1/update`,

@@ -6,6 +6,7 @@ import {
   getTaskController,
   updateTaskController,
   deleteTaskController,
+  deleteAllTasksForUserController,
 } from "../../controllers/tasks/tasks";
 import { TASK_API } from "../../routes/routes";
 import multer from "multer";
@@ -41,7 +42,11 @@ router.get(TASK_API.GET_TASK, getTaskController);
 router.put(TASK_API.UPDATE_TASK, upload.single("image"), updateTaskController);
 
 // Delete a task
+router.delete(TASK_API.DELETE_TASK, deleteTaskController);
+
+// Delete a task
 router.delete(
-  TASK_API.DELETE_TASK,
-  deleteTaskController
+  TASK_API.DELETE_ALL_TASKS,
+  verifyToken,
+  deleteAllTasksForUserController
 );

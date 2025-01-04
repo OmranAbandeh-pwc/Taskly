@@ -14,6 +14,7 @@ export const TASK_API = {
   GET_TASK: "/get/task/:id",
   UPDATE_TASK: "/update/:id",
   DELETE_TASK: "/delete/:id",
+  DELETE_ALL_TASKS: "/clear/all/tasks",
 };
 
 // Users Route
