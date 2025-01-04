@@ -32,14 +32,16 @@ const ToolsBar: React.FC<ToolsBarProps> = ({
   return (
     <div className={`${styles.toolsBar} ${className}`}>
       <div className={styles.filterButtonsContainer}>
-        <Button
-          title={showMoreText}
-          className={styles.addButton}
-          iconClass={styles.buttonIconClass}
-          textStyles={styles.buttonTextClass}
-          type="type-3"
-          onClick={() => moreOptionButton}
-        />
+        {!isMobile && (
+          <Button
+            title={showMoreText}
+            className={styles.addButton}
+            iconClass={styles.buttonIconClass}
+            textStyles={styles.buttonTextClass}
+            type="type-3"
+            onClick={moreOptionButton}
+          />
+        )}
         {filterButtons.map((button, index) => (
           <FilterButton
             key={index}

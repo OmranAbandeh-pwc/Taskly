@@ -7,8 +7,11 @@ import { API } from "../../shared/routes";
 import { useEffect, useState } from "react";
 import { TaskCardProps } from "../../components/TaskCardsSection/TaskCardsSectionTypes";
 import { filterButtons } from "../../json/filtersStatic";
-import { noTasksText } from "../../json/static/staticGeneral";
-import ConfirmationPopup from "../../components/ConfirmationPopup/ConfirmationPopup";
+import {
+  noTasksText,
+  searchbarPlaceholder,
+} from "../../json/static/staticGeneral";
+import SideBar from "../../components/SideBar/SideBar";
 
 const Home = () => {
   const [cards, setCards] = useState<TaskCardProps[]>();
@@ -18,6 +21,7 @@ const Home = () => {
     filterButtons[0].value
   );
   const [noTasksFoundText, setNoTasksFoundText] = useState(noTasksText);
+  const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(true);
 
   const fetchData = async () => {
     setIsLoading(true);
@@ -82,24 +86,36 @@ const Home = () => {
     setIsLoading(false);
   };
 
+  const toggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen); // Toggle the sidebar
+  };
+
   return (
     <div className={styles.homeContainer}>
       <SearchBar
         value={searchQuery}
+        placeholder={searchbarPlaceholder}
         onChange={setSearchQuery}
         onSearchClick={handleSearch}
       />
-      <ToolsBar
-        activeButton={activeButton}
-        setActiveButton={setActiveButton}
-        className={styles.toolsBar}
-        moreOptionButton={() => {}}
-      />
-      <TaskCardsSection
-        cards={cards ? cards : []}
-        isLoading={isLoading}
-        noTasksFoundText={noTasksFoundText}
-      />
+
+      <div className={styles.homeBodyContainer}>
+        <SideBar isOpen={isSidebarOpen} />
+
+        <div className={styles.rightSideContainer}>
+          <ToolsBar
+            activeButton={activeButton}
+            setActiveButton={setActiveButton}
+            className={styles.toolsBar}
+            moreOptionButton={toggleSidebar}
+          />
+          <TaskCardsSection
+            cards={cards ? cards : []}
+            isLoading={isLoading}
+            noTasksFoundText={noTasksFoundText}
+          />
+        </div>
+      </div>
     </div>
   );
 };

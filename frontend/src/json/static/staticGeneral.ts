@@ -7,6 +7,11 @@ const warning = "Warning!";
 const confirmLogoutMessage = "Are you sure you want to logout?";
 const cancelText = "Cancel";
 const confirmText = "Confirm";
+const searchbarPlaceholder = "Search here for any task!";
+const profileSidebarBTNTitle = "User Account";
+const clearAllTaskSidebarBTNTitle = "Clear All Tasks";
+const confirmClearAllSubTitle =
+  "Are you sure that you want to clear all Tasks of this user ?";
 
 export {
   noTasksText,
@@ -18,4 +23,8 @@ export {
   confirmLogoutMessage,
   cancelText,
   confirmText,
+  searchbarPlaceholder,
+  profileSidebarBTNTitle,
+  clearAllTaskSidebarBTNTitle,
+  confirmClearAllSubTitle,
 };
