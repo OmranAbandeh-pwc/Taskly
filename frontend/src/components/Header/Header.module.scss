@@ -10,8 +10,15 @@
   left: 0;
   background-color: $theme-color;
   display: flex;
-  justify-content: end;
+  justify-content: space-between;
   align-items: center;
+
+  .tasklyLogo {
+    height: 40px !important;
+    width: 40px !important;
+    cursor: pointer;
+    overflow: hidden;
+  }
 
   .userInfoContainer {
     display: flex;

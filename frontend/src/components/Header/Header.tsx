@@ -13,6 +13,8 @@ import {
   warning,
 } from "../../json/static/staticGeneral";
 import ConfirmationPopup from "../ConfirmationPopup/ConfirmationPopup";
+import { Link } from "react-router-dom";
+import TasklyLogo from "../../resources/icons/TasklyLogo.png"
 
 const Header = () => {
   const [userFirstName, setUserFirstName] = useState<string>("");
@@ -54,6 +56,12 @@ const Header = () => {
 
   return (
     <header className={styles.header}>
+      <Link to={PAGES.INITIAL_PAGE}>
+        <Icon
+          className={styles.tasklyLogo}
+          icon={TasklyLogo}
+        />
+      </Link>
       <div className={styles.userInfoContainer}>
         <div className={styles.userIconContainer}>
           <Icon
