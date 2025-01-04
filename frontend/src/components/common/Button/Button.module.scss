@@ -27,8 +27,11 @@
 }
 .buttonIcon {
   fill: $theme-color;
+  display: flex;
+  align-items: center;
 }
 .textStyles {
   text-align: center;
   width: 100%;
+  margin: 0;
 }

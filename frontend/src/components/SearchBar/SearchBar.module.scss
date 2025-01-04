@@ -1,5 +1,13 @@
 @import "../../variables.scss";
 
+$search-bar-padding: 10px; // Top and Bottom padding
+$search-bar-padding-mobile: 5px;
+$search-bar-font-size: 18px;
+$search-icon-size: 30px;
+
+$search-bar-height: $search-bar-padding * 2 + $search-icon-size;  // Height based on padding and icon size
+$search-bar-height-mobile: $search-bar-padding-mobile * 2 + $search-icon-size;
+
 .searchbarContainer {
   width: 100%;
   box-shadow: 0 0 20px 1px $gray-color-5;
@@ -8,12 +16,12 @@
   justify-content: center;
   gap: 10px;
   padding-inline: 30px;
-  padding-top: 10px;
-  padding-bottom: 10px;
+  padding-top: $search-bar-padding;
+  padding-bottom: $search-bar-padding;
   box-sizing: border-box;
 
   .searchIcon {
-    font-size: 30px;
+    font-size: $search-icon-size;
     color: gray;
     cursor: pointer;
     flex-shrink: 0;
@@ -24,7 +32,7 @@
     border: none;
     outline: none;
     color: $gray-color-2;
-    font-size: 18px;
+    font-size: $search-bar-font-size;
     padding: 15px;
     padding-inline: 10px;
   }
