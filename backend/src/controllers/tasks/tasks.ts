@@ -27,7 +27,7 @@ async function ensureContainerExists() {
 }
 ensureContainerExists();
 
-// Add a new task Controller------------------------------------------------------------------
+// Add a new task Controller-------------------------------------------------------------------
 export const addNewTaskController = async (
   req: RequestWithUserRole,
   res: Response
@@ -101,7 +101,7 @@ export const addNewTaskController = async (
   }
 };
 
-// Get all tasks for a specific user Controller ----------------------------------------------
+// Get all tasks for a specific user Controller -----------------------------------------------
 export const getTasksFilterController = async (
   req: RequestWithUserRole,
   res: Response
@@ -158,7 +158,7 @@ export const getTasksFilterController = async (
   }
 };
 
-// Get task for a specific user Controller ---------------------------------------------------
+// Get task for a specific user Controller ----------------------------------------------------
 export const getTaskController = async (
   req: Request,
   res: Response
@@ -195,7 +195,7 @@ export const getTaskController = async (
   }
 };
 
-// Update Task Controller --------------------------------------------------------------------
+// Update Task Controller ---------------------------------------------------------------------
 export const updateTaskController = async (
   req: Request,
   res: Response
@@ -265,7 +265,7 @@ export const updateTaskController = async (
   }
 };
 
-// Delete Task Controller --------------------------------------------------------------------
+// Delete Task Controller ---------------------------------------------------------------------
 export const deleteTaskController = async (
   req: Request,
   res: Response
@@ -320,6 +320,78 @@ export const deleteTaskController = async (
     return res.status(500).json({
       status: 500,
       message: "Failed to delete task",
+      details: error.message,
+    });
+  }
+};
+
+// Delete All Tasks for a Specific User Controller --------------------------------------------
+export const deleteAllTasksForUserController = async (
+  req: RequestWithUserRole,
+  res: Response
+): Promise<Response> => {
+  const userid = req.userid;
+
+  if (!userid) {
+    return res.status(400).json({ message: "User ID is required." });
+  }
+  try {
+    const pool = await connectToDatabase();
+
+    // Step 1: Retrieve all image URLs for the user's tasks from the database
+    const selectQuery =
+      "SELECT imageName, imageUrl FROM Tasks WHERE userid = @userid";
+    const selectResult = await pool
+      .request()
+      .input("userid", sql.NVarChar, userid)
+      .query(selectQuery);
+
+    if (selectResult.recordset.length === 0) {
+      return res
+        .status(404)
+        .json({ status: 404, message: "No tasks found for this user" });
+    }
+
+    console.log("Reached ---------");
+    // Step 2: Delete all associated images from Azure Blob Storage
+    for (const task of selectResult.recordset) {
+      const imageUrl = task.imageUrl;
+      if (imageUrl) {
+        try {
+          const blobName = decodeURIComponent(imageUrl.split("/").pop());
+          if (blobName) {
+            const blockBlobClient =
+              containerClient.getBlockBlobClient(blobName);
+            await blockBlobClient.deleteIfExists();
+          } else {
+            console.warn(
+              "Blob name could not be determined from imageUrl:",
+              imageUrl
+            );
+          }
+        } catch (blobError: any) {
+          console.error("Error deleting blob:", blobError.message);
+        }
+      }
+    }
+
+    // Step 3: Delete all tasks for the user from the database
+    const deleteQuery = "DELETE FROM Tasks WHERE userid = @userid";
+    await pool
+      .request()
+      .input("userid", sql.NVarChar, userid)
+      .query(deleteQuery);
+
+    return res.status(200).json({
+      status: 200,
+      message:
+        "All tasks and associated images for the user deleted successfully",
+    });
+  } catch (error: any) {
+    console.error("Error deleting tasks for user:", error.message);
+    return res.status(500).json({
+      status: 500,
+      message: "Failed to delete tasks for user",
       details: error.message,
     });
   }

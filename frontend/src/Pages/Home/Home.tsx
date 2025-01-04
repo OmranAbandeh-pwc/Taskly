@@ -21,7 +21,7 @@ const Home = () => {
     filterButtons[0].value
   );
   const [noTasksFoundText, setNoTasksFoundText] = useState(noTasksText);
-  const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(true);
+  const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false);
 
   const fetchData = async () => {
     setIsLoading(true);
