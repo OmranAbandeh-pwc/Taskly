@@ -6,6 +6,8 @@ CREATE TABLE USERS (
     id NVARCHAR(100) NOT NULL PRIMARY KEY,
     firstName NVARCHAR(100) NOT NULL,
     secondName NVARCHAR(100) NOT NULL,
+    userImageName NVARCHAR(150),                  -- URL of the uploaded image
+    userImageUrl NVARCHAR(MAX)
     birthday DATE NOT NULL,
     email NVARCHAR(255) NOT NULL UNIQUE,
     password NVARCHAR(255) NOT NULL
@@ -22,5 +24,6 @@ CREATE TABLE Tasks (
     importance NVARCHAR(50) NOT NULL,         -- Importance as a string (e.g., 'Low', 'Medium', 'High')
     startDate DATE NOT NULL,                  -- Start date of the task
     endDate DATE NOT NULL,                    -- End date of the task
-    image NVARCHAR(MAX)                       -- URL of the uploaded image
+    imageName NVARCHAR(150),                  -- URL of the uploaded image
+    imageUrl NVARCHAR(MAX)
 );
