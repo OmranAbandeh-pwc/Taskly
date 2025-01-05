@@ -84,7 +84,7 @@ const LoginPage = () => {
   // Validation schema (using Yup)
   const validationSchema = Yup.object({
     email: Yup.string().email(invalidEmailText).required(emptyFieldText),
-    password: Yup.string().min(6, minPassText).required(emptyFieldText),
+    password: Yup.string().min(1, minPassText).required(emptyFieldText),
   });
 
   return (

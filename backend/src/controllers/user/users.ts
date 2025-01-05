@@ -1,7 +1,6 @@
 import { Response } from "express";
 import { connectToDatabase } from "../../DB/dbConfig";
 import sql from "mssql";
-
 import RequestWithUserRole from "../../types/user";
 
 export const userDetailsController = async (
@@ -13,7 +12,7 @@ export const userDetailsController = async (
   try {
     const pool = await connectToDatabase();
     const query = `
-        SELECT firstName, secondName, birthday, email FROM USERS WHERE id = @userid
+        SELECT firstName, secondName, userImageName, userImageUrl, birthday, email FROM USERS WHERE id = @userid
       `;
 
     const result = await pool

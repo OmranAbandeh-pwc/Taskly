@@ -3,7 +3,6 @@ import { connectToDatabase } from "../../DB/dbConfig";
 import RequestWithUserRole from "../../types/user";
 import sql from "mssql";
 
-
 // Search API
 export const searchController = async (
   req: RequestWithUserRole,
@@ -22,7 +21,7 @@ export const searchController = async (
   try {
     const pool = await connectToDatabase();
     const query = `
-        SELECT id, title, subTitle, importance, startDate, endDate 
+        SELECT id, title, subTitle, importance, startDate, endDate, imageName, imageUrl
         FROM Tasks 
         WHERE userid = @userid AND title LIKE @title
       `;
@@ -52,4 +51,3 @@ export const searchController = async (
     });
   }
 };
-

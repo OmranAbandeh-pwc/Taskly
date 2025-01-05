@@ -14,10 +14,11 @@ import {
 } from "../../json/static/staticGeneral";
 import ConfirmationPopup from "../ConfirmationPopup/ConfirmationPopup";
 import { Link } from "react-router-dom";
-import TasklyLogo from "../../resources/icons/TasklyLogo.png"
+import TasklyLogo from "../../resources/icons/TasklyLogo.png";
 
 const Header = () => {
   const [userFirstName, setUserFirstName] = useState<string>("");
+  const [userImageUrl, setUserImageUrl] = useState("");
   const [isPopupOpen, setIsPopupOpen] = useState<boolean>(false); // State for popup
 
   const fetchUserAPI = () => {
@@ -35,6 +36,7 @@ const Header = () => {
       .then((result) => {
         if (result.status === 200) {
           setUserFirstName(result.user[0].firstName);
+          setUserImageUrl(result.user[0].userImageUrl);
         }
       })
       .catch((error) => console.error(error));
@@ -57,19 +59,11 @@ const Header = () => {
   return (
     <header className={styles.header}>
       <Link to={PAGES.INITIAL_PAGE}>
-        <Icon
-          className={styles.tasklyLogo}
-          icon={TasklyLogo}
-        />
+        <Icon className={styles.tasklyLogo} icon={TasklyLogo} />
       </Link>
       <div className={styles.userInfoContainer}>
         <div className={styles.userIconContainer}>
-          <Icon
-            className={styles.userIcon}
-            icon={
-              "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT36VHh-mjL_Rc8IL60D77dMDPL_fNhosHuag&s"
-            }
-          />
+          <Icon className={styles.userIcon} icon={userImageUrl} />
           <Drawer
             className={styles.drawerContainer}
             handleLogout={confirmLogout}
