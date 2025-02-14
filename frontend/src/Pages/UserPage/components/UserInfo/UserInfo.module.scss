@@ -1,0 +1,20 @@
+.userInfoContainer {
+  padding-inline: 50px;
+  margin-top: 100px;
+
+  .userImage {
+    height: 150px;
+    width: 150px;
+    border-radius: 100%;
+  }
+
+  .userName {
+    font-size: 28px;
+    margin-bottom: 60px;
+  }
+
+  .userEmail {
+    font-size: 18px;
+    margin-bottom: 30px;
+  }
+}
