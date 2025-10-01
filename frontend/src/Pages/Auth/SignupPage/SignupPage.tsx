@@ -26,8 +26,8 @@ import TitleSection from "../../../components/common/TitleSection/TitleSection";
 import TextWithButton from "../components/TextWithButton/TextWithButton";
 import { Formik } from "formik";
 import * as Yup from "yup";
-import { AUTH } from "../../../shared/routes";
 import SubmitInput from "../../../components/common/SubmitInput/SubmitInput";
+import usePostSignupQuery from "../../../server/hooks/usePostSignup";
 
 interface FormValues {
   firstName: string;
@@ -39,37 +39,36 @@ interface FormValues {
 }
 
 const SignupPage = () => {
+  const { mutate: postSignup } = usePostSignupQuery();
+
   const handleSignup = (
     values: FormValues,
     setFieldError: (field: string, message: string) => void
   ) => {
-    const myHeaders = new Headers();
-    myHeaders.append("Content-Type", "application/json");
-
-    const raw = JSON.stringify({
-      firstName: values.firstName,
-      secondName: values.secondName,
-      birthday: values.birthday,
-      email: values.email,
-      password: values.password,
-      confirmPassword: values.confirmPassword,
-    });
-
-    const requestOptions: any = {
-      method: "POST",
-      headers: myHeaders,
-      body: raw,
-      redirect: "follow",
-    };
-
-    fetch(AUTH.SIGNUP, requestOptions)
-      .then((response) => response.json())
-      .then((result) => {
-        if (result.status === 400) {
-          setFieldError("email", result.message);
-        }
-      })
-      .catch((error) => console.error(error));
+    postSignup(
+      {
+        signal: new AbortController().signal,
+        firstName: values.firstName,
+        secondName: values.secondName,
+        birthday: values.birthday,
+        email: values.email,
+        password: values.password,
+        confirmPassword: values.confirmPassword,
+      },
+      {
+        onSuccess: (response) => {
+          console.log("Signup success : ", response);
+        },
+        onError: (error: any) => {
+          const statusCode = error.response.status;
+          const errorMessage =
+            error.response.data?.message || "Something went wrong.";
+          if (statusCode === 400) {
+            setFieldError("email", errorMessage);
+          }
+        },
+      }
+    );
   };
 
   // Initial values

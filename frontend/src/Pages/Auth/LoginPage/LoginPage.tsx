@@ -20,12 +20,11 @@ import { useState } from "react";
 import { useResize } from "../../../hooks/useResize";
 import TitleSection from "../../../components/common/TitleSection/TitleSection";
 import TextWithButton from "../components/TextWithButton/TextWithButton";
-import { AUTH } from "../../../shared/routes";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import pic from "../../../resources/images/Logo_square_400x400.png";
 import SubmitInput from "../../../components/common/SubmitInput/SubmitInput";
-
+import usePostSigninQuery from "../../../server/hooks/usePostSignin";
 interface FormValues {
   email: string;
   password: string;
@@ -36,43 +35,46 @@ const LoginPage = () => {
     useState<boolean>(false);
   const { widthSize } = useResize();
 
+  const { mutate: postSignin } = usePostSigninQuery();
+
   const handleLogin = (
     email: string,
     password: string,
     setFieldError: (field: string, message: string) => void
   ) => {
-    const myHeaders = new Headers();
-    myHeaders.append("Content-Type", "application/json");
-
-    const raw = JSON.stringify({
-      email: email,
-      password: password,
-    });
-
-    const requestOptions: any = {
-      method: "POST",
-      headers: myHeaders,
-      body: raw,
-      redirect: "follow",
-    };
-
-    fetch(AUTH.SIGNIN, requestOptions)
-      .then((response) => response.json())
-      .then((result) => {
-        if (result.status === 200) {
-          if (isRememberMeChecked) {
-            localStorage.setItem("userToken", result.token);
-          } else {
-            sessionStorage.setItem("userToken", result.token);
+    postSignin(
+      {
+        signal: new AbortController().signal,
+        email: email,
+        password: password,
+      },
+      {
+        onSuccess: (response) => {
+          const resData = response.data;
+          if (resData.status === 200) {
+            if (isRememberMeChecked) {
+              localStorage.setItem("userToken", resData.token);
+            } else {
+              sessionStorage.setItem("userToken", resData.token);
+            }
+            window.location.reload();
           }
-          window.location.reload();
-        } else if (result.status === 404) {
-          setFieldError("email", result.message);
-        } else if (result.status === 401) {
-          setFieldError("password", result.message);
-        }
-      })
-      .catch((error) => console.error(error));
+        },
+        onError: (error: any) => {
+          const statusCode = error.response.status;
+          const errorMessage =
+            error.response.data?.message || "Something went wrong.";
+
+          if (statusCode === 404) {
+            setFieldError("email", errorMessage);
+          } else if (statusCode === 401) {
+            setFieldError("password", errorMessage);
+          } else {
+            alert(`Error: ${errorMessage}`);
+          }
+        },
+      }
+    );
   };
 
   // Initial values
